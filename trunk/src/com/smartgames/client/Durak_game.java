@@ -242,7 +242,7 @@ private void loadLogin() {
     signInLink.setHref(loginInfo.getLoginUrl());
     loginPanel.add(loginLabel);
     loginPanel.add(signInLink);
-    RootPanel.get("stockList").add(loginPanel);
+    RootPanel.get("rootItem").add(loginPanel);
 }
 
 private void playThisCard(ClickEvent event) {
