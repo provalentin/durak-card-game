@@ -198,7 +198,7 @@ public class Durak_game implements EntryPoint {
       public void onSuccess(LoginInfo result) {
         loginInfo = result;
         if(loginInfo.isLoggedIn()) {
-          loadStockWatcher();
+          Window.alert("now we can start the game");
         } else {
           loadLogin();
         }
@@ -237,7 +237,6 @@ public class Durak_game implements EntryPoint {
 			
 		}
 	};
-
   
 private void loadLogin() {
     // Assemble login panel.
@@ -247,129 +246,6 @@ private void loadLogin() {
     RootPanel.get("stockList").add(loginPanel);
 }
 
-
-private void loadStockWatcher() {
-	// Set up sign out hyperlink.
-    signOutLink.setHref(loginInfo.getLogoutUrl());
-
-	// Create table for stock data.
-    stocksFlexTable.setText(0, 0, "Symbol");
-    stocksFlexTable.setText(0, 1, "Price");
-    stocksFlexTable.setText(0, 2, "Change");
-    stocksFlexTable.setText(0, 3, "Remove");
-    stocksFlexTable.setText(0, 4, "History");
-
-    // Add styles to elements in the stock list table.
-    stocksFlexTable.setCellPadding(6);
-    stocksFlexTable.getRowFormatter().addStyleName(0, "watchListHeader");
-    stocksFlexTable.addStyleName("watchList");
-    stocksFlexTable.getCellFormatter().addStyleName(0, 1, "watchListNumericColumn");
-    stocksFlexTable.getCellFormatter().addStyleName(0, 2, "watchListNumericColumn");
-    stocksFlexTable.getCellFormatter().addStyleName(0, 3, "watchListRemoveColumn");
-
-    loadStocks();
-
-    // Assemble Add Stock panel.
-    addPanel.add(newSymbolTextBox);
-    addPanel.add(addStockButton);
-    addPanel.addStyleName("addPanel");
-
-    // Assemble Main panel.
-    mainPanel.add(signOutLink);
-    mainPanel.add(stocksFlexTable);
-    stocksFlexTable.setWidth("385px");
-    
-    Button btnNewButton = new Button("New button");
-    mainPanel.add(btnNewButton);
-    mainPanel.add(addPanel);
-    mainPanel.add(lastUpdatedLabel);
-    
-    //rightPanel.add(horizontalPanel);
-    //rightPanel.add(absolutePanel);
-    
-    rootPanel.add(mainPanel);
-    rootPanel.add(rightPanel);
-   
-    // Associate the Main panel with the HTML host page.
-    RootPanel.get("stockList").add(rootPanel);
-
-    // Move cursor focus to the input box.
-    newSymbolTextBox.setFocus(true);
-
-    // Setup timer to refresh list automatically.
-    Timer refreshTimer = new Timer() {
-      @Override
-      public void run() {
-        refreshWatchList();
-      }
-    };
-    refreshTimer.scheduleRepeating(REFRESH_INTERVAL);
-
-    // Listen for mouse events on the Add button.
-    addStockButton.addClickHandler(new ClickHandler() {
-      public void onClick(ClickEvent event) {
-        addStock();
-      }
-    });
-
-    // Listen for keyboard events in the input box.
-    newSymbolTextBox.addKeyPressHandler(new KeyPressHandler() {
-      public void onKeyPress(KeyPressEvent event) {
-        if (event.getCharCode() == KeyCodes.KEY_ENTER) {
-          addStock();
-        }
-      }
-    });
-}
-
-  private void loadStocks() {
-    stockService.getStocks(new AsyncCallback<String[]>() {
-      public void onFailure(Throwable error) {
-      }
-      public void onSuccess(String[] symbols) {
-        displayStocks(symbols);
-      }
-    });
-  }
-
-  private void displayStocks(String[] symbols) {
-
-  /**
-   * Add stock to FlexTable. Executed when the user clicks the addStockButton or
-   * presses enter in the newSymbolTextBox.
-   */
-  private void addStock() {
-
-  private void addStock(final String symbol) {
-  private void displayStock(final String symbol) {
-
-	  private void removeStock(final String symbol) {
-
-	  private void undisplayStock(String symbol) {
-	    int removedIndex = stocks.indexOf(symbol);
-	    stocks.remove(removedIndex);
-	    stocksFlexTable.removeRow(removedIndex+1);
-	  }
-  protected void getStockHistory() {
-
-  /**
-   * Generate random stock prices.
-   */
-  private void refreshWatchList() {
-
-  /**
-   * Update the Price and Change fields all the rows in the stock table.
-   *
-   * @param prices Stock data for all rows.
-   */
-  private void updateTable(StockPrice[] prices) {
-
-  /**
-   * Update a single row in the stock table.
-   *
-   * @param price Stock data for a single row.
-   */
-  private void updateTable(StockPrice price) {
 private void playThisCard(ClickEvent event) {
 	((Image)event.getSource()).removeFromParent();
 	tableCards.add((Image)event.getSource());
