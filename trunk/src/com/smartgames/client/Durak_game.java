@@ -63,7 +63,8 @@ public class Durak_game implements EntryPoint {
 
   public void onModuleLoad() {
 	//absolutePanel = new AbsolutePanel();
-  	rightPanel.add(absolutePanel);
+	RootPanel.get("rootItem").add(absolutePanel);
+  	//rightPanel.add(absolutePanel);
   	absolutePanel.setSize("902px", "527px");
   	
   	Image image_2 = new Image("images/106.png");
@@ -180,7 +181,7 @@ public class Durak_game implements EntryPoint {
   		firstPlayerCards[i].addMouseOverHandler(mouseOverHandler);
   		firstPlayerCards[i].addMouseOutHandler(mouseOutHandler);
   		firstPlayerCards[i].addClickHandler(clickHandler);
-  		firstPlayerCards[i].setUrl("images/0.png");
+  		//firstPlayerCards[i].setUrl("images/0.png");
   		//absolutePanel.add(secondPlayerCards[i], i * 70, 417);
   		secondPlayerCards[i].addMouseOverHandler(mouseOverHandler);
   		secondPlayerCards[i].addMouseOutHandler(mouseOutHandler);
@@ -210,7 +211,7 @@ public class Durak_game implements EntryPoint {
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
 			// TODO Auto-generated method stub
-			((Image)event.getSource()).setSize("70px", "100px");
+			((Image)event.getSource()).setSize("80px", "120px");
 		}
 		
   };  
