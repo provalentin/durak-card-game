@@ -1,0 +1,2 @@
+serviceClass: com.smartgames.client.LoginService
+path: C7146F1F2445EDDD91C0B96EFAE16801.gwt.rpc
