@@ -62,10 +62,10 @@ public class Durak_game implements EntryPoint {
   private Anchor signOutLink = new Anchor("Sign Out");
 
   public void onModuleLoad() {
-	prepareGame();
-  	
-  	
-    // Check login status using login service.
+	  //for nice visual
+	  //prepareGame();
+	  
+	  // Check login status using login service.
     LoginServiceAsync loginService = GWT.create(LoginService.class);
     loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
       public void onFailure(Throwable error) {
@@ -252,8 +252,11 @@ private void loadLogin() {
 }
 
 private void playThisCard(ClickEvent event) {
-	((Image)event.getSource()).removeFromParent();
-	tableCards.add((Image)event.getSource());
-	absolutePanel.add((Image)event.getSource(),200+tableCards.size()*10 + tableCards.size()%2 * 80, 200 +tableCards.size()*10);
+	if(tableCards.size()<12){
+		((Image)event.getSource()).removeFromParent();
+		tableCards.add((Image)event.getSource());
+		int size = tableCards.size();
+		absolutePanel.add((Image)event.getSource(),100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+	}
 }
 }
