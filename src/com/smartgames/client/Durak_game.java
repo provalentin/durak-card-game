@@ -66,101 +66,100 @@ public class Durak_game implements EntryPoint {
   	rightPanel.add(absolutePanel);
   	absolutePanel.setSize("902px", "527px");
   	
-  	Image image_2 = new Image("images/jan1.gif");
+  	Image image_2 = new Image("images/106.gif");
   	absolutePanel.add(image_2, 10, 10);
   	
-  	Image image_3 = new Image("images/jan2.gif");
+  	Image image_3 = new Image("images/107.gif");
   	absolutePanel.add(image_3, 76, 10);
   	
-  	Image image_4 = new Image("images/jank.gif");
+  	Image image_4 = new Image("images/108.gif");
   	absolutePanel.add(image_4, 142, 10);
   	
-  	Image image_5 = new Image("images/jant.gif");
+  	Image image_5 = new Image("images/109.gif");
   	absolutePanel.add(image_5, 208, 10);
   	
-  	Image image_1 = new Image("images/feb1.gif");
+  	Image image_1 = new Image("images/110.gif");
   	absolutePanel.add(image_1, 274, 10);
   	
-  	Image image_6 = new Image("images/feb2.gif");
+  	Image image_6 = new Image("images/111.gif");
   	absolutePanel.add(image_6, 340, 10);
   	
-  	Image image_7 = new Image("images/febt.gif");
+  	Image image_7 = new Image("images/112.gif");
   	absolutePanel.add(image_7, 406, 10);
   	
-  	Image image_8 = new Image("images/feby.gif");
+  	Image image_8 = new Image("images/113.gif");
   	absolutePanel.add(image_8, 472, 10);
   	
-  	Image image = new Image("images/mar1.gif");
+  	Image image = new Image("images/114.gif");
   	absolutePanel.add(image, 539, 10);
   	
-  	Image image_9 = new Image("images/mar2.gif");
+  	Image image_9 = new Image("images/0.gif");
   	absolutePanel.add(image_9, 605, 10);
   	
-  	Image image_10 = new Image("images/mark.gif");
-  	image_10.setStyleName("s");
+  	Image image_10 = new Image("images/202.gif");
   	absolutePanel.add(image_10, 10, 417);
   	
-  	Image image_11 = new Image("images/mart.gif");
+  	Image image_11 = new Image("images/203.gif");
   	absolutePanel.add(image_11, 76, 417);
   	
-  	Image image_12 = new Image("images/apr1.gif");
+  	Image image_12 = new Image("images/204.gif");
   	absolutePanel.add(image_12, 142, 417);
   	
-  	Image image_13 = new Image("images/apr2.gif");
+  	Image image_13 = new Image("images/205.gif");
   	absolutePanel.add(image_13, 208, 417);
   	
-  	Image image_14 = new Image("images/aprt.gif");
+  	Image image_14 = new Image("images/206.gif");
   	absolutePanel.add(image_14, 274, 417);
   	
-  	Image image_15 = new Image("images/apry.gif");
+  	Image image_15 = new Image("images/207.gif");
   	absolutePanel.add(image_15, 340, 417);
   	
-  	Image image_16 = new Image("images/may1.gif");
+  	Image image_16 = new Image("images/208.gif");
   	absolutePanel.add(image_16, 406, 417);
   	
-  	Image image_17 = new Image("images/may2.gif");
+  	Image image_17 = new Image("images/209.gif");
   	absolutePanel.add(image_17, 472, 417);
   	
-  	Image image_18 = new Image("images/mayt.gif");
+  	Image image_18 = new Image("images/210.gif");
   	absolutePanel.add(image_18, 539, 417);
   	
-  	Image image_19 = new Image("images/mayy.gif");
+  	Image image_19 = new Image("images/211.gif");
   	absolutePanel.add(image_19, 605, 417);
   	
-  	Image image_20 = new Image("images/jok1.gif");
+  	Image image_20 = new Image("images/0.gif");
   	absolutePanel.add(image_20, 10, 190);
   	
-  	Image image_21 = new Image("images/jok1.gif");
+  	Image image_21 = new Image("images/0.gif");
   	absolutePanel.add(image_21, 15, 195);
   	
-  	Image image_22 = new Image("images/jok1.gif");
+  	Image image_22 = new Image("images/0.gif");
   	absolutePanel.add(image_22, 20, 200);
   	
-  	Image image_23 = new Image("images/jok1.gif");
+  	Image image_23 = new Image("images/0.gif");
   	absolutePanel.add(image_23, 25, 205);
   	
-  	Image image_24 = new Image("images/jok1.gif");
+  	Image image_24 = new Image("images/0.gif");
   	absolutePanel.add(image_24, 30, 210);
   	
-  	Image image_25 = new Image("images/jok1.gif");
+  	Image image_25 = new Image("images/0.gif");
   	absolutePanel.add(image_25, 35, 215);
   	
-  	Image image_26 = new Image("images/jok1.gif");
+  	Image image_26 = new Image("images/0.gif");
   	absolutePanel.add(image_26, 40, 220);
   	
-  	Image image_27 = new Image("images/jok1.gif");
+  	Image image_27 = new Image("images/0.gif");
   	absolutePanel.add(image_27, 45, 225);
   	
-  	Image image_28 = new Image("images/jok1.gif");
+  	Image image_28 = new Image("images/0.gif");
   	absolutePanel.add(image_28, 50, 230);
   	
-  	Image image_29 = new Image("images/jok1.gif");
+  	Image image_29 = new Image("images/0.gif");
   	absolutePanel.add(image_29, 55, 235);
   	
-  	Image image_30 = new Image("images/jok1.gif");
+  	Image image_30 = new Image("images/0.gif");
   	absolutePanel.add(image_30, 60, 240);
   	
-  	Image image_31 = new Image("images/jok1.gif");
+  	Image image_31 = new Image("images/0.gif");
   	absolutePanel.add(image_31, 65, 245);
 
   	image_2.addMouseOverHandler(mouseOverHandler);
