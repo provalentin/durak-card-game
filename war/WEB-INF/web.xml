@@ -7,6 +7,17 @@
 
   <!-- Servlets -->
   <servlet>
+    <servlet-name>loginService</servlet-name>
+    <servlet-class>com.smartgames.server.LoginServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>loginService</servlet-name>
+    <url-pattern>/durak_game/login</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>com.smartgames.server.GreetingServiceImpl</servlet-class>
   </servlet>

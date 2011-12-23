@@ -62,10 +62,32 @@ public class Durak_game implements EntryPoint {
   private Anchor signOutLink = new Anchor("Sign Out");
 
   public void onModuleLoad() {
+	prepareGame();
+  	
+  	
+    // Check login status using login service.
+    LoginServiceAsync loginService = GWT.create(LoginService.class);
+    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+      public void onFailure(Throwable error) {
+      }
+
+      public void onSuccess(LoginInfo result) {
+        loginInfo = result;
+        if(loginInfo.isLoggedIn()) {
+          Window.alert("now we can start the game");
+          prepareGame();
+        } else {
+          loadLogin();
+          Window.alert("Please log in before game starts");
+        }
+      }
+    });
+  }
+
+private void prepareGame() {
 	//absolutePanel = new AbsolutePanel();
-	RootPanel.get("rootItem").add(absolutePanel);
-  	//rightPanel.add(absolutePanel);
-  	absolutePanel.setSize("902px", "527px");
+	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
+  	absolutePanel.setSize("902px", "550px");
   	
   	Image image_2 = new Image("images/106.png");
   	absolutePanel.add(image_2, 10, 10);
@@ -187,24 +209,7 @@ public class Durak_game implements EntryPoint {
   		secondPlayerCards[i].addMouseOutHandler(mouseOutHandler);
   		secondPlayerCards[i].addClickHandler(clickHandler);
   	}
-  	
-  	
-    // Check login status using login service.
-    LoginServiceAsync loginService = GWT.create(LoginService.class);
-    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
-      public void onFailure(Throwable error) {
-      }
-
-      public void onSuccess(LoginInfo result) {
-        loginInfo = result;
-        if(loginInfo.isLoggedIn()) {
-          Window.alert("now we can start the game");
-        } else {
-          loadLogin();
-        }
-      }
-    });
-  }
+}
 
   private MouseOverHandler mouseOverHandler = new MouseOverHandler(){
 
@@ -243,12 +248,12 @@ private void loadLogin() {
     signInLink.setHref(loginInfo.getLoginUrl());
     loginPanel.add(loginLabel);
     loginPanel.add(signInLink);
-    RootPanel.get("rootItem").add(loginPanel);
+    RootPanel.get("loginItem").add(loginPanel);
 }
 
 private void playThisCard(ClickEvent event) {
 	((Image)event.getSource()).removeFromParent();
 	tableCards.add((Image)event.getSource());
-	absolutePanel.add((Image)event.getSource(),200+tableCards.size()*10, 200 +tableCards.size()*10);
+	absolutePanel.add((Image)event.getSource(),200+tableCards.size()*10 + tableCards.size()%2 * 80, 200 +tableCards.size()*10);
 }
 }
