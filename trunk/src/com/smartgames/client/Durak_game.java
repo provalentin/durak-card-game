@@ -173,6 +173,7 @@ private void prepareGame() {
 			players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
 			players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
 			players[playerNo].get(i).getImage().addClickHandler(clickHandler);
+			players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
 		}
 	  repaintPlayerCards(playerNo);
   }
