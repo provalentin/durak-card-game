@@ -304,7 +304,7 @@ private void playThisCard(Image image, int size, Card card) {
 
 private boolean isValidCard(Card card) {
 	// TODO Auto-generated method stub
-	Window.alert(tableCards.get(tableCards.size()-1).price + "-" + card.price);
+	//Window.alert(tableCards.get(tableCards.size()-1).price + "-" + card.price);
 	if(card.price>tableCards.get(tableCards.size()-1).price){
 		return true;
 	}
