@@ -84,17 +84,6 @@ public class Durak_game implements EntryPoint {
     });
   }
 
-private void startGame() {
-	//Window.alert("playing game");
-	// TODO Auto-generated method stub
-	while(gameInProgress()) {
-		servefirstPlayer();
-	  	serveSecondPlayer();
-	  	moveTableCardsToTrash();
-	  	moveToNextPlayer();
-	}
-}
-
 private void moveTableCardsToTrash() {
 	// TODO Auto-generated method stub
 	for(int i=0;i<tableCards.size();i++){
@@ -102,26 +91,6 @@ private void moveTableCardsToTrash() {
 	}
 	trashCards.addAll(tableCards);
 	tableCards.clear();
-}
-
-private void firstPlayerAttack() {
-	// TODO Auto-generated method stub
-	currentPlayer = 0;
-	servefirstPlayer();
-  	serveSecondPlayer();
-}
-
-
-private void secondPlayerAttack() {
-	// TODO Auto-generated method stub
-	currentPlayer = 1;
-	servefirstPlayer();
-  	serveSecondPlayer();
-}
-
-private boolean gameInProgress() {
-	// TODO Auto-generated method stub
-	return true;
 }
 
 private void prepareGame() {
@@ -266,6 +235,7 @@ private void loadLogin() {
 
 
 private void playThisCard(ClickEvent event) {
+	
 	Image image = (Image)event.getSource();
 	
 	//Window.alert(image.getUrl());
@@ -354,12 +324,6 @@ private Card findCard(String url){
 		}
 	}
  return null;
-}
-
-private void removeAndAddImage(Card card, int newX, int newY){
-	card.getImage().removeFromParent();
-	card.getImage().setUrl(card.getSrcImage());
-	absolutePanel.add(card.getImage(),newX, newY);
 }
 
 private void moveCard(Image image, int newX, int newY){
