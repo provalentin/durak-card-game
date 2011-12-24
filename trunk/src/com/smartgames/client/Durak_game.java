@@ -120,7 +120,7 @@ private void prepareGame() {
   		cardPack.add(new Card(id, (i/9 + 1), src, new Image(src), 0));
   		//Window.alert(""+i);
   	}
-  	(new Randoms(new Random())).shuffle(trashCards);
+  	(new Randoms(new Random())).shuffle(cardPack);
   	for (int i=0; i<cardPack.size();i++){
   		//Window.alert(cardPack.get(i).getSrcImage());
   		absolutePanel.add(cardPack.get(i).getImage(), 0 + i*5 , 120  + i*5);
