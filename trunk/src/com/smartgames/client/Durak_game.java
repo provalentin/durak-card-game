@@ -51,7 +51,7 @@ public class Durak_game implements EntryPoint {
   public void onModuleLoad() {
   	firstPlayerNextMoveButton.setText("Next move");
 	  //for nice visual
-	  //prepareGame();
+	prepareGame();
 	//firstPlayerNextMoveButton.setText("next move");
   	//firstPlayerNextMoveButton.setHTML("1");
   	
@@ -138,7 +138,7 @@ private void prepareGame() {
   	
   	for (int i=0; i<36;i++){
   		int id   = (i/9 + 1) * 100 + i%9 + 6;
-  		String src = "images/" + id + ".png";
+  		String src = "images/" + 0 + ".png";
   		cardPack.add(new Card(id, (i/9 + 1), src, new Image(src), 0));
   		//Window.alert(""+i);
   	}
@@ -178,7 +178,7 @@ private void prepareGame() {
   
   private void repaintPlayerCards(int playerNo){
 	  for(int i=0;i<players[playerNo].size();i++){
-			moveCard(players[playerNo].get(i).getImage(),20 + i*80, (playerNo==0)?10+i/12*40:417+i/12*40);
+			moveCard(players[playerNo].get(i).getImage(),20 + i%12*80, (playerNo==0)?10+i/12*40:417+i/12*40);
 	  }
   }
   
