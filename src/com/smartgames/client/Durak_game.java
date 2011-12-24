@@ -65,23 +65,23 @@ public class Durak_game implements EntryPoint {
 	  
 	  
 	  // Check login status using login service.
-    LoginServiceAsync loginService = GWT.create(LoginService.class);
-    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
-      public void onFailure(Throwable error) {
-      }
-
-      public void onSuccess(LoginInfo result) {
-        loginInfo = result;
-        if(loginInfo.isLoggedIn()) {
-          //Window.alert("now we can start the game");
-          prepareGame();
-          //startGame();
-        } else {
-          loadLogin();
-          Window.alert("Please log in before game starts");
-        }
-      }
-    });
+//    LoginServiceAsync loginService = GWT.create(LoginService.class);
+//    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+//      public void onFailure(Throwable error) {
+//      }
+//
+//      public void onSuccess(LoginInfo result) {
+//        loginInfo = result;
+//        if(loginInfo.isLoggedIn()) {
+//          //Window.alert("now we can start the game");
+//          prepareGame();
+//          //startGame();
+//        } else {
+//          loadLogin();
+//          Window.alert("Please log in before game starts");
+//        }
+//      }
+//    });
   }
 
 private void startGame() {
