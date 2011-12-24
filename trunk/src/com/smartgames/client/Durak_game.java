@@ -262,21 +262,26 @@ private void loadLogin() {
 
 private void playThisCard(ClickEvent event) {
 	Image image = (Image)event.getSource();
+	
 	//Window.alert(image.getUrl());
 	String url = image.getUrl();
 	url = url.substring(url.length()-14,url.length());
+	//Window.alert("-"+url);
 	//Window.alert(url);
+	Card card = findCard(url);
 	if (isCardFound(url)) {
 		int size = tableCards.size()+1;
-		Card card = findCard(url);
 		if(size<=12){
 			if(size%2==0 ){
-				if(isValidCard()){
+				if(isValidCard(card)){
+					//Window.alert(card.getId()+"-"+size);
 					playThisCard(image, size, card);
 				}
 			}else{
+				//Window.alert(card.getId()+"-"+size);
 				playThisCard(image, size, card);
 			}
+			//Window.alert(card.getId()+"-"+size);
 		}
 		if(size==12){
 			moveTableCardsToTrash();
@@ -284,7 +289,8 @@ private void playThisCard(ClickEvent event) {
 		  	serveSecondPlayer();
 		  	moveToNextPlayer();
 		}
-		moveToNextPlayer();
+		
+		//Window.alert(card.getId()+"-"+size);
 	}
 	
 }
@@ -293,12 +299,13 @@ private void playThisCard(Image image, int size, Card card) {
 	players[currentPlayer].remove(card);
 	tableCards.add(card);
 	moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+	moveToNextPlayer();
 }
 
-private boolean isValidCard() {
+private boolean isValidCard(Card card) {
 	// TODO Auto-generated method stub
-	
-	if(tableCards.get(tableCards.size()-1).price>tableCards.get(tableCards.size()-2).price){
+	Window.alert(tableCards.get(tableCards.size()-1).price + "-" + card.price);
+	if(card.price>tableCards.get(tableCards.size()-1).price){
 		return true;
 	}
 	return false;
@@ -315,6 +322,7 @@ private boolean isCardFound(String url) {
 
 private Card findCard(String url){
 	for(int i=0;i<players[currentPlayer].size();i++){
+		//Window.alert(players[currentPlayer].get(i).getSrcImage()+"-"+url);
 		if (url.equals(players[currentPlayer].get(i).getSrcImage())){
 			return players[currentPlayer].get(i);
 		}
