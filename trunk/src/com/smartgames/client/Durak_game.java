@@ -358,7 +358,7 @@ private void moveCard(Image image, int newX, int newY){
 	//image.removeFromParent();
 	//absolutePanel.add(image,newX, newY);
 	CustomAnimation animation = new CustomAnimation(image.getElement());
-    animation.scrollTo(newX, newY, 2000);
+    animation.scrollTo(newX, newY, 1000);
 
 }
 }
