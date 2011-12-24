@@ -31,6 +31,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Durak_game implements EntryPoint {
 
@@ -55,6 +56,7 @@ public class Durak_game implements EntryPoint {
   private ArrayList<Card> cardPack = new ArrayList<Card>();
   private ArrayList<Card> firstPlayerCards = new ArrayList<Card>();
   private ArrayList<Card> secondPlayerCards = new ArrayList<Card>();
+  private ArrayList<Card>[] players =  (ArrayList<Card>[])new ArrayList[]{firstPlayerCards,secondPlayerCards};
   /**
    * Entry point method.
    */
@@ -154,22 +156,22 @@ private void prepareGame() {
   private void serveSecondPlayer() {
 	// TODO Auto-generated method stub
 	  for(int i=0;i<6;i++){
-			secondPlayerCards.add(cardPack.remove(cardPack.size()-1));
-			moveCard(secondPlayerCards.get(i).getImage(), 200 +i*80, 10);
-			secondPlayerCards.get(i).getImage().addMouseOverHandler(mouseOverHandler);
-			secondPlayerCards.get(i).getImage().addMouseOutHandler(mouseOutHandler);
-			secondPlayerCards.get(i).getImage().addClickHandler(clickHandler);
+		    players[1].add(cardPack.remove(cardPack.size()-1));
+			moveCard(players[1].get(i).getImage(), 200 +i*80, 10);
+			players[1].get(i).getImage().addMouseOverHandler(mouseOverHandler);
+			players[1].get(i).getImage().addMouseOutHandler(mouseOutHandler);
+			players[1].get(i).getImage().addClickHandler(clickHandler);
 		}
 }
 
 private void servefirstPlayer() {
 	// TODO Auto-generated method stub
 	for(int i=0;i<6;i++){
-		firstPlayerCards.add(cardPack.remove(cardPack.size()-1));
-		moveCard(firstPlayerCards.get(i).getImage(),200 + i*80, 417);
-		firstPlayerCards.get(i).getImage().addMouseOverHandler(mouseOverHandler);
-		firstPlayerCards.get(i).getImage().addMouseOutHandler(mouseOutHandler);
-		firstPlayerCards.get(i).getImage().addClickHandler(clickHandler);
+		players[0].add(cardPack.remove(cardPack.size()-1));
+		moveCard(players[0].get(i).getImage(),200 + i*80, 417);
+		players[0].get(i).getImage().addMouseOverHandler(mouseOverHandler);
+		players[0].get(i).getImage().addMouseOutHandler(mouseOutHandler);
+		players[0].get(i).getImage().addClickHandler(clickHandler);
 	}
   }
 
@@ -214,13 +216,36 @@ private void loadLogin() {
 }
 
 private void playThisCard(ClickEvent event) {
-    currentPlayer = currentPlayer==1?2:1;
-	if(tableCardsImages.size()<12){
-		((Image)event.getSource()).removeFromParent();
-		tableCardsImages.add((Image)event.getSource());
-		int size = tableCardsImages.size();
-		absolutePanel.add((Image)event.getSource(),100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+	Image image = (Image)event.getSource();
+	Window.alert(image.getUrl());
+	String url = image.getUrl();
+	url = url.substring(url.length()-14,url.length());
+	Window.alert(url);
+	if (isCardFound(url)) {
+		if(tableCards.size()<=12){
+			image.removeFromParent();
+			int size = tableCards.size();
+			absolutePanel.add(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+		}
+		moveToNextPlayer();
 	}
+	
+}
+
+private void moveToNextPlayer() {
+	currentPlayer = currentPlayer==0?1:0;
+}
+
+private boolean isCardFound(String url) {
+	// TODO Auto-generated method stub
+		for(int i=0;i<players[currentPlayer].size();i++){
+			if (url.equals(players[currentPlayer].get(i).getSrcImage())){
+				tableCards.add(players[currentPlayer].remove(i));
+				Window.alert(url);
+				return true;
+			}
+		}
+	return false;
 }
 
 private void moveCard(Image image, int newX, int newY){
