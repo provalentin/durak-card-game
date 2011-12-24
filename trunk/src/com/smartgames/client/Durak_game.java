@@ -47,10 +47,12 @@ public class Durak_game implements EntryPoint {
   private VerticalPanel rightPanel = new VerticalPanel();
   private ArrayList<String> stocks = new ArrayList<String>();
   
-  private Image[] firstPlayerCards;
-  private Image[] secondPlayerCards;
-  private Image[] cardPack;
-  private ArrayList<Image> tableCards = new ArrayList<Image>();
+  private Image[] firstPlayerCardsImages;
+  private Image[] secondPlayerCardsImages;
+  private Image[] cardPackImages;
+  private ArrayList<Image> tableCardsImages = new ArrayList<Image>();
+  private ArrayList<Card> tableCards = new ArrayList<Card>();
+  private ArrayList<Card> cardPack = new ArrayList<Card>();
   
   /**
    * Entry point method.
@@ -60,6 +62,7 @@ public class Durak_game implements EntryPoint {
   private Label loginLabel = new Label("Please sign in to your Google Account to access the StockWatcher application.");
   private Anchor signInLink = new Anchor("Sign In");
   private Anchor signOutLink = new Anchor("Sign Out");
+  private int currentPlayer = 1;
 
   public void onModuleLoad() {
 	  //for nice visual
@@ -76,6 +79,7 @@ public class Durak_game implements EntryPoint {
         if(loginInfo.isLoggedIn()) {
           Window.alert("now we can start the game");
           prepareGame();
+          //startGame();
         } else {
           loadLogin();
           Window.alert("Please log in before game starts");
@@ -84,7 +88,32 @@ public class Durak_game implements EntryPoint {
     });
   }
 
+private void startGame() {
+	Window.alert("playing game");
+	// TODO Auto-generated method stub
+	while(gameInProgress()) {
+		firstPlayerMove();
+		secondPlayerMove();
+	}
+}
+
+private void firstPlayerMove() {
+	// TODO Auto-generated method stub
+	currentPlayer = 1;
+}
+
+private void secondPlayerMove() {
+	// TODO Auto-generated method stub
+	currentPlayer = 2;
+}
+
+private boolean gameInProgress() {
+	// TODO Auto-generated method stub
+	return true;
+}
+
 private void prepareGame() {
+	Window.alert("preparing game");
 	//absolutePanel = new AbsolutePanel();
 	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
   	absolutePanel.setSize("902px", "550px");
@@ -188,26 +217,37 @@ private void prepareGame() {
   	image_2.addMouseOverHandler(mouseOverHandler);
   	image_2.addMouseOutHandler(mouseOutHandler);
   	image.addClickHandler(clickHandler);
-  	cardPack = new Image[]{image_20, image_21, image_22, 
+  	cardPackImages = new Image[]{image_20, image_21, image_22, 
   			image_23, image_24, image_25, image_26, image_27, 
   			image_28, image_29, image_30, image_31};
-  	for (int i=0;i<cardPack.length;i++){
+  	for (int i=0;i<cardPackImages.length;i++){
 //  		absolutePanel.add(cardPack[i], i * 5, 180 + i * 5);
   	}
-  	firstPlayerCards = new Image[]{image, image_1, image_2, image_3, 
+  	for (int i=0; i<36;i++){
+  		int id   = (i/9 + 1) * 100 + i%9 + 6;
+  		String src = "images/" + id + ".png";
+  		cardPack.add(new Card(id, (i/9 + 1), src, new Image(src), 0));
+  		//Window.alert(""+i);
+  	}
+  	for (int i=0; i<cardPack.size();i++){
+  		//Window.alert(cardPack.get(i).getSrcImage());
+  		absolutePanel.add(cardPack.get(i).getImage(), 70 + i*5 , 250  + i*5);
+  	}
+  	firstPlayerCardsImages = new Image[]{image, image_1, image_2, image_3, 
   			image_4, image_5, image_6, image_7, image_8, image_9};
-  	secondPlayerCards = new Image[]{image_10, image_11, image_12, 
+  	
+  	secondPlayerCardsImages = new Image[]{image_10, image_11, image_12, 
   			image_13, image_14, image_15, image_16, image_17, image_18, image_19};
-  	for(int i=0; i< firstPlayerCards.length;i++){
+  	for(int i=0; i< firstPlayerCardsImages.length;i++){
   		//absolutePanel.add(firstPlayerCards[i], i * 70, 10);
-  		firstPlayerCards[i].addMouseOverHandler(mouseOverHandler);
-  		firstPlayerCards[i].addMouseOutHandler(mouseOutHandler);
-  		firstPlayerCards[i].addClickHandler(clickHandler);
+  		firstPlayerCardsImages[i].addMouseOverHandler(mouseOverHandler);
+  		firstPlayerCardsImages[i].addMouseOutHandler(mouseOutHandler);
+  		firstPlayerCardsImages[i].addClickHandler(clickHandler);
   		//firstPlayerCards[i].setUrl("images/0.png");
   		//absolutePanel.add(secondPlayerCards[i], i * 70, 417);
-  		secondPlayerCards[i].addMouseOverHandler(mouseOverHandler);
-  		secondPlayerCards[i].addMouseOutHandler(mouseOutHandler);
-  		secondPlayerCards[i].addClickHandler(clickHandler);
+  		secondPlayerCardsImages[i].addMouseOverHandler(mouseOverHandler);
+  		secondPlayerCardsImages[i].addMouseOutHandler(mouseOutHandler);
+  		secondPlayerCardsImages[i].addClickHandler(clickHandler);
   	}
 }
 
@@ -252,10 +292,11 @@ private void loadLogin() {
 }
 
 private void playThisCard(ClickEvent event) {
-	if(tableCards.size()<12){
+    currentPlayer = currentPlayer==1?2:1;
+	if(tableCardsImages.size()<12){
 		((Image)event.getSource()).removeFromParent();
-		tableCards.add((Image)event.getSource());
-		int size = tableCards.size();
+		tableCardsImages.add((Image)event.getSource());
+		int size = tableCardsImages.size();
 		absolutePanel.add((Image)event.getSource(),100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
 	}
 }
