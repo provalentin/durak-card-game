@@ -306,7 +306,9 @@ private boolean isValidCard(Card card) {
 	// TODO Auto-generated method stub
 	//Window.alert(tableCards.get(tableCards.size()-1).price + "-" + card.price);
 	if(card.price>tableCards.get(tableCards.size()-1).price){
-		return true;
+		if(card.kind==tableCards.get(tableCards.size()-1).kind){
+			return true;
+		}
 	}
 	return false;
 }
