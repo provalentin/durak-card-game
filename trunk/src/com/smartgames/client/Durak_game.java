@@ -54,6 +54,7 @@ public class Durak_game implements EntryPoint {
   private ArrayList<Image> tableCardsImages = new ArrayList<Image>();
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
+  private ArrayList<Card> trashCards = new ArrayList<Card>();
   private ArrayList<Card> firstPlayerCards = new ArrayList<Card>();
   private ArrayList<Card> secondPlayerCards = new ArrayList<Card>();
   private ArrayList<Card>[] players =  (ArrayList<Card>[])new ArrayList[]{firstPlayerCards,secondPlayerCards};
@@ -95,19 +96,33 @@ private void startGame() {
 	//Window.alert("playing game");
 	// TODO Auto-generated method stub
 	while(gameInProgress()) {
-		firstPlayerMove();
-		secondPlayerMove();
+		servefirstPlayer();
+	  	serveSecondPlayer();
+	  	moveTableCardsToTrash();
+	  	moveToNextPlayer();
 	}
 }
 
-private void firstPlayerMove() {
+private void moveTableCardsToTrash() {
 	// TODO Auto-generated method stub
-	currentPlayer = 1;
+	for(int i=0;i<tableCards.size();i++){
+		trashCards.add(tableCards.remove(i));
+	}
 }
 
-private void secondPlayerMove() {
+private void firstPlayerAttack() {
 	// TODO Auto-generated method stub
-	currentPlayer = 2;
+	currentPlayer = 0;
+	servefirstPlayer();
+  	serveSecondPlayer();
+}
+
+
+private void secondPlayerAttack() {
+	// TODO Auto-generated method stub
+	currentPlayer = 1;
+	servefirstPlayer();
+  	serveSecondPlayer();
 }
 
 private boolean gameInProgress() {
@@ -155,18 +170,18 @@ private void prepareGame() {
 
   private void serveSecondPlayer() {
 	// TODO Auto-generated method stub
-	  for(int i=0;i<6;i++){
+	  for(int i=players[1].size();i<6;i++){
 		    players[1].add(cardPack.remove(cardPack.size()-1));
 			moveCard(players[1].get(i).getImage(), 200 +i*80, 10);
 			players[1].get(i).getImage().addMouseOverHandler(mouseOverHandler);
 			players[1].get(i).getImage().addMouseOutHandler(mouseOutHandler);
 			players[1].get(i).getImage().addClickHandler(clickHandler);
 		}
-}
+  }
 
-private void servefirstPlayer() {
+  private void servefirstPlayer() {
 	// TODO Auto-generated method stub
-	for(int i=0;i<6;i++){
+	for(int i=players[0].size();i<6;i++){
 		players[0].add(cardPack.remove(cardPack.size()-1));
 		moveCard(players[0].get(i).getImage(),200 + i*80, 417);
 		players[0].get(i).getImage().addMouseOverHandler(mouseOverHandler);
@@ -217,7 +232,7 @@ private void loadLogin() {
 
 private void playThisCard(ClickEvent event) {
 	Image image = (Image)event.getSource();
-	Window.alert(image.getUrl());
+	//Window.alert(image.getUrl());
 	String url = image.getUrl();
 	url = url.substring(url.length()-14,url.length());
 	Window.alert(url);
@@ -226,6 +241,11 @@ private void playThisCard(ClickEvent event) {
 			image.removeFromParent();
 			int size = tableCards.size();
 			absolutePanel.add(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+		}
+		if(tableCards.size()==12){
+			moveTableCardsToTrash();
+			servefirstPlayer();
+		  	serveSecondPlayer();
 		}
 		moveToNextPlayer();
 	}
@@ -241,7 +261,7 @@ private boolean isCardFound(String url) {
 		for(int i=0;i<players[currentPlayer].size();i++){
 			if (url.equals(players[currentPlayer].get(i).getSrcImage())){
 				tableCards.add(players[currentPlayer].remove(i));
-				Window.alert(url);
+				//Window.alert(url);
 				return true;
 			}
 		}
