@@ -4,17 +4,10 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.user.client.Random;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
@@ -29,29 +22,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.Collections;
+import java.util.Random;
 
 public class Durak_game implements EntryPoint {
 
-  private static final int REFRESH_INTERVAL = 5000; // ms
-  private VerticalPanel mainPanel = new VerticalPanel();
-  private FlexTable stocksFlexTable = new FlexTable();
-  private HorizontalPanel addPanel = new HorizontalPanel();
-  private TextBox newSymbolTextBox = new TextBox();
-  private Button addStockButton = new Button("Add");
-  private Label lastUpdatedLabel = new Label();
-  private HorizontalPanel horizontalPanel = new HorizontalPanel();
-  private HorizontalPanel rootPanel = new HorizontalPanel();
   private AbsolutePanel absolutePanel = new AbsolutePanel();
-  private VerticalPanel rightPanel = new VerticalPanel();
-  private ArrayList<String> stocks = new ArrayList<String>();
   
-  private Image[] firstPlayerCardsImages;
-  private Image[] secondPlayerCardsImages;
-  private Image[] cardPackImages;
-  private ArrayList<Image> tableCardsImages = new ArrayList<Image>();
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
   private ArrayList<Card> trashCards = new ArrayList<Card>();
@@ -143,6 +120,7 @@ private void prepareGame() {
   		cardPack.add(new Card(id, (i/9 + 1), src, new Image(src), 0));
   		//Window.alert(""+i);
   	}
+  	(new Randoms(new Random())).shuffle(trashCards);
   	for (int i=0; i<cardPack.size();i++){
   		//Window.alert(cardPack.get(i).getSrcImage());
   		absolutePanel.add(cardPack.get(i).getImage(), 0 + i*5 , 120  + i*5);
@@ -231,6 +209,7 @@ private void playThisCard(ClickEvent event) {
 			moveTableCardsToTrash();
 			servefirstPlayer();
 		  	serveSecondPlayer();
+		  	moveToNextPlayer();
 		}
 		moveToNextPlayer();
 	}
