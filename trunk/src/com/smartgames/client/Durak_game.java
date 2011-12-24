@@ -106,7 +106,9 @@ private void startGame() {
 private void moveTableCardsToTrash() {
 	// TODO Auto-generated method stub
 	for(int i=0;i<tableCards.size();i++){
-		trashCards.add(tableCards.remove(i));
+		Card card = tableCards.remove(i);
+		card.getImage().removeFromParent();
+		trashCards.add(card);
 	}
 }
 
@@ -235,7 +237,7 @@ private void playThisCard(ClickEvent event) {
 	//Window.alert(image.getUrl());
 	String url = image.getUrl();
 	url = url.substring(url.length()-14,url.length());
-	Window.alert(url);
+	//Window.alert(url);
 	if (isCardFound(url)) {
 		if(tableCards.size()<=12){
 			image.removeFromParent();
