@@ -16,6 +16,30 @@ public class Card {
 		this.image = image;
 		this.state = state;
 	}
+	public String getSrcImage() {
+		return srcImage;
+	}
+	public void setSrcImage(String srcImage) {
+		this.srcImage = srcImage;
+	}
+	public Image getImage() {
+		return image;
+	}
+	public void setImage(Image image) {
+		this.image = image;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public int getId() {
+		return id;
+	}
+	public int getKind() {
+		return kind;
+	}
     
     
 
