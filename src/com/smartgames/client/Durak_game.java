@@ -128,7 +128,7 @@ private void prepareGame() {
 	//Window.alert("preparing game");
 	//absolutePanel = new AbsolutePanel();
 	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
-  	absolutePanel.setSize("902px", "550px");
+  	absolutePanel.setSize("1200px", "650px");
   	
   	absolutePanel.add(firstPlayerNextMoveButton,600,140);
   	secondPlayerNextMoveButton.setText("Next move");
@@ -178,7 +178,7 @@ private void prepareGame() {
   
   private void repaintPlayerCards(int playerNo){
 	  for(int i=0;i<players[playerNo].size();i++){
-			moveCard(players[playerNo].get(i).getImage(),20 + i*80, (playerNo==0)?10:417);
+			moveCard(players[playerNo].get(i).getImage(),20 + i*80, (playerNo==0)?10+i/12*40:417+i/12*40);
 	  }
   }
   
@@ -276,13 +276,15 @@ private void playThisCard(ClickEvent event) {
 		int size = tableCards.size()+1;
 		if(size<=12){
 			if(size%2==0 ){
-				if(isValidCard(card)){
+				if(isValidSecondCard(card)){
 					//Window.alert(card.getId()+"-"+size);
 					playThisCard(image, size, card);
 				}
 			}else{
-				//Window.alert(card.getId()+"-"+size);
-				playThisCard(image, size, card);
+				if(isValidFirstCard(card)){
+					//Window.alert(card.getId()+"-"+size);
+					playThisCard(image, size, card);
+				}
 			}
 			//Window.alert(card.getId()+"-"+size);
 		}
@@ -298,14 +300,28 @@ private void playThisCard(ClickEvent event) {
 	
 }
 
+private boolean isValidFirstCard(Card card) {
+	// TODO Auto-generated method stub
+	if (tableCards.size()==0){
+		return true;
+	}else{
+		for(int i=0;i<tableCards.size();i++){
+			if(tableCards.get(i).getPrice()==card.price){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 private void playThisCard(Image image, int size, Card card) {
 	players[currentPlayer].remove(card);
 	tableCards.add(card);
-	moveCard(image,110 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+	moveCard(image,120 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
 	moveToNextPlayer();
 }
 
-private boolean isValidCard(Card card) {
+private boolean isValidSecondCard(Card card) {
 	// TODO Auto-generated method stub
 	//Window.alert(tableCards.get(tableCards.size()-1).price + "-" + card.price);
 	if(card.price>tableCards.get(tableCards.size()-1).price){
