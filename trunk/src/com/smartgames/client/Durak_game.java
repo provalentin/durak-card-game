@@ -106,7 +106,7 @@ private void startGame() {
 private void moveTableCardsToTrash() {
 	// TODO Auto-generated method stub
 	for(int i=0;i<tableCards.size();i++){
-		Card card = tableCards.remove(i);
+		Card card = tableCards.remove(0);
 		card.getImage().removeFromParent();
 		trashCards.add(card);
 	}
@@ -152,22 +152,6 @@ private void prepareGame() {
   	servefirstPlayer();
   	serveSecondPlayer();
   	
-//  	firstPlayerCardsImages = new Image[]{image, image_1, image_2, image_3, 
-//  			image_4, image_5, image_6, image_7, image_8, image_9};
-//  	
-//  	secondPlayerCardsImages = new Image[]{image_10, image_11, image_12, 
-//  			image_13, image_14, image_15, image_16, image_17, image_18, image_19};
-//  	for(int i=0; i< firstPlayerCardsImages.length;i++){
-//  		//absolutePanel.add(firstPlayerCards[i], i * 70, 10);
-//  		firstPlayerCardsImages[i].addMouseOverHandler(mouseOverHandler);
-//  		firstPlayerCardsImages[i].addMouseOutHandler(mouseOutHandler);
-//  		firstPlayerCardsImages[i].addClickHandler(clickHandler);
-//  		//firstPlayerCards[i].setUrl("images/0.png");
-//  		//absolutePanel.add(secondPlayerCards[i], i * 70, 417);
-//  		secondPlayerCardsImages[i].addMouseOverHandler(mouseOverHandler);
-//  		secondPlayerCardsImages[i].addMouseOutHandler(mouseOutHandler);
-//  		secondPlayerCardsImages[i].addClickHandler(clickHandler);
-//  	}
 }
 
   private void serveSecondPlayer() {
@@ -263,7 +247,7 @@ private boolean isCardFound(String url) {
 		for(int i=0;i<players[currentPlayer].size();i++){
 			if (url.equals(players[currentPlayer].get(i).getSrcImage())){
 				tableCards.add(players[currentPlayer].remove(i));
-				//Window.alert(url);
+				Window.alert(tableCards.size() + url);
 				return true;
 			}
 		}
@@ -272,7 +256,6 @@ private boolean isCardFound(String url) {
 
 private void moveCard(Image image, int newX, int newY){
 	image.removeFromParent();
-	//tableCardsImages.add(image);
 	absolutePanel.add(image,newX, newY);
 
 }
