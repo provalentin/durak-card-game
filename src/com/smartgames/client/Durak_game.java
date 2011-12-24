@@ -106,10 +106,9 @@ private void startGame() {
 private void moveTableCardsToTrash() {
 	// TODO Auto-generated method stub
 	for(int i=0;i<tableCards.size();i++){
-		Card card = tableCards.remove(0);
-		card.getImage().removeFromParent();
-		trashCards.add(card);
+		tableCards.get(i).getImage().removeFromParent();
 	}
+	tableCards.clear();
 }
 
 private void firstPlayerAttack() {
@@ -247,7 +246,7 @@ private boolean isCardFound(String url) {
 		for(int i=0;i<players[currentPlayer].size();i++){
 			if (url.equals(players[currentPlayer].get(i).getSrcImage())){
 				tableCards.add(players[currentPlayer].remove(i));
-				Window.alert(tableCards.size() + url);
+				//Window.alert(tableCards.size() + url);
 				return true;
 			}
 		}
