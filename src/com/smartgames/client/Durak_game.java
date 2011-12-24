@@ -119,111 +119,6 @@ private void prepareGame() {
 	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
   	absolutePanel.setSize("902px", "550px");
   	
-//  	Image image_2 = new Image("images/106.png");
-//  	absolutePanel.add(image_2, 10, 10);
-//  	
-//  	Image image_3 = new Image("images/107.png");
-//  	absolutePanel.add(image_3, 76, 10);
-//  	
-//  	Image image_4 = new Image("images/108.png");
-//  	absolutePanel.add(image_4, 142, 10);
-//  	
-//  	Image image_5 = new Image("images/109.png");
-//  	absolutePanel.add(image_5, 208, 10);
-//  	
-//  	Image image_1 = new Image("images/110.png");
-//  	absolutePanel.add(image_1, 274, 10);
-//  	
-//  	Image image_6 = new Image("images/111.png");
-//  	absolutePanel.add(image_6, 340, 10);
-//  	
-//  	Image image_7 = new Image("images/112.png");
-//  	absolutePanel.add(image_7, 406, 10);
-//  	
-//  	Image image_8 = new Image("images/113.png");
-//  	absolutePanel.add(image_8, 472, 10);
-//  	
-//  	Image image = new Image("images/114.png");
-//  	absolutePanel.add(image, 539, 10);
-//  	
-//  	Image image_9 = new Image("images/102.png");
-//  	absolutePanel.add(image_9, 605, 10);
-  	
-//  	Image image_10 = new Image("images/202.png");
-//  	absolutePanel.add(image_10, 10, 417);
-//  	
-//  	Image image_11 = new Image("images/203.png");
-//  	absolutePanel.add(image_11, 76, 417);
-//  	
-//  	Image image_12 = new Image("images/204.png");
-//  	absolutePanel.add(image_12, 142, 417);
-//  	
-//  	Image image_13 = new Image("images/205.png");
-//  	absolutePanel.add(image_13, 208, 417);
-//  	
-//  	Image image_14 = new Image("images/206.png");
-//  	absolutePanel.add(image_14, 274, 417);
-//  	
-//  	Image image_15 = new Image("images/207.png");
-//  	absolutePanel.add(image_15, 340, 417);
-//  	
-//  	Image image_16 = new Image("images/208.png");
-//  	absolutePanel.add(image_16, 406, 417);
-//  	
-//  	Image image_17 = new Image("images/209.png");
-//  	absolutePanel.add(image_17, 472, 417);
-//  	
-//  	Image image_18 = new Image("images/210.png");
-//  	absolutePanel.add(image_18, 539, 417);
-//  	
-//  	Image image_19 = new Image("images/211.png");
-//  	absolutePanel.add(image_19, 605, 417);
-  	
-//  	Image image_20 = new Image("images/0.png");
-//  	absolutePanel.add(image_20, 10, 190);
-//  	
-//  	Image image_21 = new Image("images/0.png");
-//  	absolutePanel.add(image_21, 15, 195);
-//  	
-//  	Image image_22 = new Image("images/0.png");
-//  	absolutePanel.add(image_22, 20, 200);
-//  	
-//  	Image image_23 = new Image("images/0.png");
-//  	absolutePanel.add(image_23, 25, 205);
-//  	
-//  	Image image_24 = new Image("images/0.png");
-//  	absolutePanel.add(image_24, 30, 210);
-//  	
-//  	Image image_25 = new Image("images/0.png");
-//  	absolutePanel.add(image_25, 35, 215);
-//  	
-//  	Image image_26 = new Image("images/0.png");
-//  	absolutePanel.add(image_26, 40, 220);
-//  	
-//  	Image image_27 = new Image("images/0.png");
-//  	absolutePanel.add(image_27, 45, 225);
-//  	
-//  	Image image_28 = new Image("images/0.png");
-//  	absolutePanel.add(image_28, 50, 230);
-//  	
-//  	Image image_29 = new Image("images/0.png");
-//  	absolutePanel.add(image_29, 55, 235);
-//  	
-//  	Image image_30 = new Image("images/0.png");
-//  	absolutePanel.add(image_30, 60, 240);
-//  	
-//  	Image image_31 = new Image("images/0.png");
-//  	absolutePanel.add(image_31, 65, 245);
-
-//  	image_2.addMouseOverHandler(mouseOverHandler);
-//  	image_2.addMouseOutHandler(mouseOutHandler);
-//  	image.addClickHandler(clickHandler);
-//  	cardPackImages = new Image[]{image_20, image_21, image_22, 
-//  			image_23, image_24, image_25, image_26, image_27, 
-//  			image_28, image_29, image_30, image_31};
-//  	for (int i=0;i<cardPackImages.length;i++){
-//  		absolutePanel.add(cardPack[i], i * 5, 180 + i * 5);
-//  	}
   	for (int i=0; i<36;i++){
   		int id   = (i/9 + 1) * 100 + i%9 + 6;
   		String src = "images/" + id + ".png";
@@ -330,7 +225,7 @@ private void playThisCard(ClickEvent event) {
 
 private void moveCard(Image image, int newX, int newY){
 	image.removeFromParent();
-	tableCardsImages.add(image);
+	//tableCardsImages.add(image);
 	absolutePanel.add(image,newX, newY);
 
 }
