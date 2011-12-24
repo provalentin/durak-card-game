@@ -28,6 +28,8 @@ import java.util.Random;
 public class Durak_game implements EntryPoint {
 
   private AbsolutePanel absolutePanel = new AbsolutePanel();
+  private Button firstPlayerNextMoveButton = new Button("2");
+  private Button secondPlayerNextMoveButton = new Button("2");
   
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
@@ -46,8 +48,20 @@ public class Durak_game implements EntryPoint {
   private int currentPlayer = 1;
 
   public void onModuleLoad() {
+  	firstPlayerNextMoveButton.setText("Next move");
 	  //for nice visual
 	  //prepareGame();
+	//firstPlayerNextMoveButton.setText("next move");
+  	//firstPlayerNextMoveButton.setHTML("1");
+  	
+  	absolutePanel.add(firstPlayerNextMoveButton,600,140);
+  	secondPlayerNextMoveButton.setText("Next move");
+  	//secondPlayerNextMoveButton.setText("next move");
+  	//secondPlayerNextMoveButton.setHTML("2");
+  	absolutePanel.add(secondPlayerNextMoveButton, 600, 380);
+  	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler1);
+  	secondPlayerNextMoveButton.addClickHandler(nextMoveClickHandler2);
+	  
 	  
 	  // Check login status using login service.
     LoginServiceAsync loginService = GWT.create(LoginService.class);
@@ -85,6 +99,7 @@ private void moveTableCardsToTrash() {
 	for(int i=0;i<tableCards.size();i++){
 		tableCards.get(i).getImage().removeFromParent();
 	}
+	trashCards.addAll(tableCards);
 	tableCards.clear();
 }
 
@@ -114,6 +129,12 @@ private void prepareGame() {
 	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
   	absolutePanel.setSize("902px", "550px");
   	
+  	absolutePanel.add(firstPlayerNextMoveButton,600,140);
+  	secondPlayerNextMoveButton.setText("Next move");
+  	absolutePanel.add(secondPlayerNextMoveButton, 600, 380);
+  	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler1);
+  	secondPlayerNextMoveButton.addClickHandler(nextMoveClickHandler2);
+  	
   	for (int i=0; i<36;i++){
   		int id   = (i/9 + 1) * 100 + i%9 + 6;
   		String src = "images/" + id + ".png";
@@ -133,27 +154,73 @@ private void prepareGame() {
 
   private void serveSecondPlayer() {
 	// TODO Auto-generated method stub
-	  for(int i=players[1].size();i<6;i++){
-		    players[1].add(cardPack.remove(cardPack.size()-1));
-			moveCard(players[1].get(i).getImage(), 200 +i*80, 10);
-			players[1].get(i).getImage().addMouseOverHandler(mouseOverHandler);
-			players[1].get(i).getImage().addMouseOutHandler(mouseOutHandler);
-			players[1].get(i).getImage().addClickHandler(clickHandler);
-		}
+	  servePlayer(1);
   }
 
   private void servefirstPlayer() {
 	// TODO Auto-generated method stub
-	for(int i=players[0].size();i<6;i++){
-		players[0].add(cardPack.remove(cardPack.size()-1));
-		moveCard(players[0].get(i).getImage(),200 + i*80, 417);
-		players[0].get(i).getImage().addMouseOverHandler(mouseOverHandler);
-		players[0].get(i).getImage().addMouseOutHandler(mouseOutHandler);
-		players[0].get(i).getImage().addClickHandler(clickHandler);
-	}
+	  servePlayer(0);
   }
+  
+  private void servePlayer(int playerNo){
+	  for(int i=players[playerNo].size();i<6;i++){
+			players[playerNo].add(cardPack.remove(cardPack.size()-1));
+			moveCard(players[playerNo].get(i).getImage(),200 + i*80, (playerNo==0)?10:417);
+			players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
+			players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
+			players[playerNo].get(i).getImage().addClickHandler(clickHandler);
+		}
+  }
+  
+  private void repaintPlayerCards(int playerNo){
+	  for(int i=0;i<players[playerNo].size();i++){
+			moveCard(players[playerNo].get(i).getImage(),200 + i*80, (playerNo==0)?10:417);
+	  }
+  }
+  
+  private ClickHandler nextMoveClickHandler1 = new ClickHandler(){
 
-  private MouseOverHandler mouseOverHandler = new MouseOverHandler(){
+	@Override
+	public void onClick(ClickEvent event) {
+		// TODO Auto-generated method stub
+		handleNextMove(0);
+	}
+	  
+  };
+
+  private ClickHandler nextMoveClickHandler2 = new ClickHandler(){
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			handleNextMove(1);
+		}
+		  
+	  };
+	  
+  private void handleNextMove(int playerNo) {
+		// TODO Auto-generated method stub
+	    if(playerNo==currentPlayer){
+		    if(tableCards.size()%2==0){
+		    	moveTableCardsToTrash();
+		    	moveToNextPlayer();
+		    }else{
+		    	moveTableCardsToCurrentPlayer();
+		    }
+		    servefirstPlayer();
+	    	serveSecondPlayer();
+	    }
+  }
+  private void moveTableCardsToCurrentPlayer() {
+	// TODO Auto-generated method stub
+	  for(int i=0;i<tableCards.size();i++){
+			tableCards.get(i).getImage().removeFromParent();
+		}
+		players[currentPlayer].addAll(tableCards);
+		tableCards.clear();
+}
+
+private MouseOverHandler mouseOverHandler = new MouseOverHandler(){
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -190,6 +257,8 @@ private void loadLogin() {
     loginPanel.add(signInLink);
     RootPanel.get("loginItem").add(loginPanel);
 }
+
+
 
 private void playThisCard(ClickEvent event) {
 	Image image = (Image)event.getSource();
