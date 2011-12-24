@@ -46,6 +46,7 @@ public class Durak_game implements EntryPoint {
   private Anchor signInLink = new Anchor("Sign In");
   private Anchor signOutLink = new Anchor("Sign Out");
   private int currentPlayer = 1;
+  private int mainKind;
 
   public void onModuleLoad() {
   	firstPlayerNextMoveButton.setText("Next move");
@@ -149,6 +150,8 @@ private void prepareGame() {
   	
   	servefirstPlayer();
   	serveSecondPlayer();
+  	mainKind = cardPack.get(0).getKind();
+  	moveCard(cardPack.get(0).getImage(), 0,250);
   	
 }
 
@@ -298,7 +301,7 @@ private void playThisCard(ClickEvent event) {
 private void playThisCard(Image image, int size, Card card) {
 	players[currentPlayer].remove(card);
 	tableCards.add(card);
-	moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+	moveCard(image,110 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
 	moveToNextPlayer();
 }
 
@@ -309,6 +312,9 @@ private boolean isValidCard(Card card) {
 		if(card.kind==tableCards.get(tableCards.size()-1).kind){
 			return true;
 		}
+	}
+	if((card.kind==mainKind) && (tableCards.get(tableCards.size()-1).kind!=mainKind)){
+			return true;
 	}
 	return false;
 }
