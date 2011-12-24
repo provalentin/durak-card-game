@@ -267,14 +267,15 @@ private void playThisCard(ClickEvent event) {
 	url = url.substring(url.length()-14,url.length());
 	//Window.alert(url);
 	if (isCardFound(url)) {
-		int size = tableCards.size();
+		int size = tableCards.size()+1;
+		Card card = findCard(url);
 		if(size<=12){
 			if(size%2==0 ){
 				if(isValidCard()){
-					moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+					playThisCard(image, size, card);
 				}
 			}else{
-				moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+				playThisCard(image, size, card);
 			}
 		}
 		if(size==12){
@@ -286,6 +287,12 @@ private void playThisCard(ClickEvent event) {
 		moveToNextPlayer();
 	}
 	
+}
+
+private void playThisCard(Image image, int size, Card card) {
+	players[currentPlayer].remove(card);
+	tableCards.add(card);
+	moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
 }
 
 private boolean isValidCard() {
@@ -303,14 +310,16 @@ private void moveToNextPlayer() {
 
 private boolean isCardFound(String url) {
 	// TODO Auto-generated method stub
-		for(int i=0;i<players[currentPlayer].size();i++){
-			if (url.equals(players[currentPlayer].get(i).getSrcImage())){
-				tableCards.add(players[currentPlayer].remove(i));
-				//Window.alert(tableCards.size() + url);
-				return true;
-			}
+	return players[currentPlayer].contains(findCard(url));	
+}
+
+private Card findCard(String url){
+	for(int i=0;i<players[currentPlayer].size();i++){
+		if (url.equals(players[currentPlayer].get(i).getSrcImage())){
+			return players[currentPlayer].get(i);
 		}
-	return false;
+	}
+ return null;
 }
 
 private void moveCard(Image image, int newX, int newY){
