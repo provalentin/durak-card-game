@@ -165,11 +165,12 @@ private void prepareGame() {
   private void servePlayer(int playerNo){
 	  for(int i=players[playerNo].size();i<6;i++){
 			players[playerNo].add(cardPack.remove(cardPack.size()-1));
-			moveCard(players[playerNo].get(i).getImage(),200 + i*80, (playerNo==0)?10:417);
+			//moveCard(players[playerNo].get(i).getImage(),200 + i*80, (playerNo==0)?10:417);
 			players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
 			players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
 			players[playerNo].get(i).getImage().addClickHandler(clickHandler);
 		}
+	  repaintPlayerCards(playerNo);
   }
   
   private void repaintPlayerCards(int playerNo){
@@ -190,13 +191,13 @@ private void prepareGame() {
 
   private ClickHandler nextMoveClickHandler2 = new ClickHandler(){
 
-		@Override
-		public void onClick(ClickEvent event) {
-			// TODO Auto-generated method stub
-			handleNextMove(1);
-		}
-		  
-	  };
+	@Override
+	public void onClick(ClickEvent event) {
+		// TODO Auto-generated method stub
+		handleNextMove(1);
+	}
+	  
+  };
 	  
   private void handleNextMove(int playerNo) {
 		// TODO Auto-generated method stub
@@ -209,13 +210,11 @@ private void prepareGame() {
 		    }
 		    servefirstPlayer();
 	    	serveSecondPlayer();
+	    	
 	    }
   }
   private void moveTableCardsToCurrentPlayer() {
 	// TODO Auto-generated method stub
-	  for(int i=0;i<tableCards.size();i++){
-			tableCards.get(i).getImage().removeFromParent();
-		}
 		players[currentPlayer].addAll(tableCards);
 		tableCards.clear();
 }
