@@ -3,12 +3,13 @@ package com.smartgames.client;
 import com.google.gwt.user.client.ui.Image;
 
 public class Card {
-	public int id;
-    public int kind;
-    public int price;
-    public String srcImage;
-    public Image image;
-    public int state;
+	private int id;
+	private int kind;
+	private int price;
+	private String srcImage;
+	private Image image;
+	private Image backGroundImage;
+	private int state;
 	public Card(int id, int kind, String srcImage, Image image, int state) {
 		super();
 		this.id = id;

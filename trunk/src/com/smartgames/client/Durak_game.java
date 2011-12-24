@@ -51,7 +51,7 @@ public class Durak_game implements EntryPoint {
   public void onModuleLoad() {
   	firstPlayerNextMoveButton.setText("Next move");
 	  //for nice visual
-	prepareGame();
+	//prepareGame();
 	//firstPlayerNextMoveButton.setText("next move");
   	//firstPlayerNextMoveButton.setHTML("1");
   	
@@ -65,23 +65,23 @@ public class Durak_game implements EntryPoint {
 	  
 	  
 	  // Check login status using login service.
-//    LoginServiceAsync loginService = GWT.create(LoginService.class);
-//    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
-//      public void onFailure(Throwable error) {
-//      }
-//
-//      public void onSuccess(LoginInfo result) {
-//        loginInfo = result;
-//        if(loginInfo.isLoggedIn()) {
-//          //Window.alert("now we can start the game");
-//          prepareGame();
-//          //startGame();
-//        } else {
-//          loadLogin();
-//          Window.alert("Please log in before game starts");
-//        }
-//      }
-//    });
+    LoginServiceAsync loginService = GWT.create(LoginService.class);
+    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+      public void onFailure(Throwable error) {
+      }
+
+      public void onSuccess(LoginInfo result) {
+        loginInfo = result;
+        if(loginInfo.isLoggedIn()) {
+          //Window.alert("now we can start the game");
+          prepareGame();
+          //startGame();
+        } else {
+          loadLogin();
+          Window.alert("Please log in before game starts");
+        }
+      }
+    });
   }
 
 private void startGame() {
@@ -139,7 +139,7 @@ private void prepareGame() {
   	for (int i=0; i<36;i++){
   		int id   = (i/9 + 1) * 100 + i%9 + 6;
   		String src = "images/" + id + ".png";
-  		cardPack.add(new Card(id, (i/9 + 1), src, new Image(src), 0));
+  		cardPack.add(new Card(id, (i/9 + 1), src, new Image("images/0.png"), 0));
   		//Window.alert(""+i);
   	}
   	(new Randoms(new Random())).shuffle(cardPack);
@@ -152,6 +152,8 @@ private void prepareGame() {
   	serveSecondPlayer();
   	mainKind = cardPack.get(0).getKind();
   	moveCard(cardPack.get(0).getImage(), 0,250);
+  	cardPack.get(0).getImage().setUrl(cardPack.get(0).getSrcImage());
+  	//removeAndAddImage(cardPack.get(0),0,250);
   	
 }
 
@@ -168,7 +170,6 @@ private void prepareGame() {
   private void servePlayer(int playerNo){
 	  for(int i=players[playerNo].size();i<6;i++){
 			players[playerNo].add(cardPack.remove(cardPack.size()-1));
-			//moveCard(players[playerNo].get(i).getImage(),200 + i*80, (playerNo==0)?10:417);
 			players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
 			players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
 			players[playerNo].get(i).getImage().addClickHandler(clickHandler);
@@ -306,7 +307,7 @@ private boolean isValidFirstCard(Card card) {
 		return true;
 	}else{
 		for(int i=0;i<tableCards.size();i++){
-			if(tableCards.get(i).getPrice()==card.price){
+			if(tableCards.get(i).getPrice()==card.getPrice()){
 				return true;
 			}
 		}
@@ -324,12 +325,12 @@ private void playThisCard(Image image, int size, Card card) {
 private boolean isValidSecondCard(Card card) {
 	// TODO Auto-generated method stub
 	//Window.alert(tableCards.get(tableCards.size()-1).price + "-" + card.price);
-	if(card.price>tableCards.get(tableCards.size()-1).price){
-		if(card.kind==tableCards.get(tableCards.size()-1).kind){
+	if(card.getPrice()>tableCards.get(tableCards.size()-1).getPrice()){
+		if(card.getKind()==tableCards.get(tableCards.size()-1).getKind()){
 			return true;
 		}
 	}
-	if((card.kind==mainKind) && (tableCards.get(tableCards.size()-1).kind!=mainKind)){
+	if((card.getKind()==mainKind) && (tableCards.get(tableCards.size()-1).getKind()!=mainKind)){
 			return true;
 	}
 	return false;
@@ -352,6 +353,12 @@ private Card findCard(String url){
 		}
 	}
  return null;
+}
+
+private void removeAndAddImage(Card card, int newX, int newY){
+	card.getImage().removeFromParent();
+	card.getImage().setUrl(card.getSrcImage());
+	absolutePanel.add(card.getImage(),newX, newY);
 }
 
 private void moveCard(Image image, int newX, int newY){
