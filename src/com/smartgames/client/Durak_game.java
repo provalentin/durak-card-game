@@ -138,7 +138,7 @@ private void prepareGame() {
   	
   	for (int i=0; i<36;i++){
   		int id   = (i/9 + 1) * 100 + i%9 + 6;
-  		String src = "images/" + 0 + ".png";
+  		String src = "images/" + id + ".png";
   		cardPack.add(new Card(id, (i/9 + 1), src, new Image(src), 0));
   		//Window.alert(""+i);
   	}
