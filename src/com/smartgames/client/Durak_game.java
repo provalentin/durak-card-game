@@ -178,8 +178,6 @@ private void prepareGame() {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			//Window.alert("image was moved to center");
-			//((Image)event.getSource()).setVisibleRect(100, 15, 200, 200);
 			playThisCard(event);
 			
 		}
@@ -201,9 +199,8 @@ private void playThisCard(ClickEvent event) {
 	//Window.alert(url);
 	if (isCardFound(url)) {
 		if(tableCards.size()<=12){
-			image.removeFromParent();
 			int size = tableCards.size();
-			absolutePanel.add(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+			moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
 		}
 		if(tableCards.size()==12){
 			moveTableCardsToTrash();
@@ -233,8 +230,10 @@ private boolean isCardFound(String url) {
 }
 
 private void moveCard(Image image, int newX, int newY){
-	image.removeFromParent();
-	absolutePanel.add(image,newX, newY);
+	//image.removeFromParent();
+	//absolutePanel.add(image,newX, newY);
+	CustomAnimation animation = new CustomAnimation(image.getElement());
+    animation.scrollTo(newX, newY, 2000);
 
 }
 }
