@@ -46,6 +46,7 @@ public class Durak_game implements EntryPoint {
   private Anchor signInLink = new Anchor("Sign In");
   private Anchor signOutLink = new Anchor("Sign Out");
   private int currentPlayer = 1;
+  private Card currentCard;
 
   public void onModuleLoad() {
   	firstPlayerNextMoveButton.setText("Next move");
@@ -175,7 +176,7 @@ private void prepareGame() {
   
   private void repaintPlayerCards(int playerNo){
 	  for(int i=0;i<players[playerNo].size();i++){
-			moveCard(players[playerNo].get(i).getImage(),200 + i*80, (playerNo==0)?10:417);
+			moveCard(players[playerNo].get(i).getImage(),20 + i*80, (playerNo==0)?10:417);
 	  }
   }
   
@@ -248,6 +249,7 @@ private MouseOverHandler mouseOverHandler = new MouseOverHandler(){
 			
 		}
 	};
+
   
 private void loadLogin() {
     // Assemble login panel.
@@ -266,11 +268,17 @@ private void playThisCard(ClickEvent event) {
 	url = url.substring(url.length()-14,url.length());
 	//Window.alert(url);
 	if (isCardFound(url)) {
-		if(tableCards.size()<=12){
-			int size = tableCards.size();
-			moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+		int size = tableCards.size();
+		if(size<=12){
+			if(size%2==0 ){
+				if(isValidCard()){
+					moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+				}
+			}else{
+				moveCard(image,100 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
+			}
 		}
-		if(tableCards.size()==12){
+		if(size==12){
 			moveTableCardsToTrash();
 			servefirstPlayer();
 		  	serveSecondPlayer();
@@ -279,6 +287,15 @@ private void playThisCard(ClickEvent event) {
 		moveToNextPlayer();
 	}
 	
+}
+
+private boolean isValidCard() {
+	// TODO Auto-generated method stub
+	
+	if(currentCard.price>tableCards.get(tableCards.size()-1).price){
+		return true;
+	}
+	return false;
 }
 
 private void moveToNextPlayer() {
@@ -291,6 +308,7 @@ private boolean isCardFound(String url) {
 			if (url.equals(players[currentPlayer].get(i).getSrcImage())){
 				tableCards.add(players[currentPlayer].remove(i));
 				//Window.alert(tableCards.size() + url);
+				currentCard = tableCards.get(tableCards.size()-1);
 				return true;
 			}
 		}

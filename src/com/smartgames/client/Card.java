@@ -5,6 +5,7 @@ import com.google.gwt.user.client.ui.Image;
 public class Card {
 	public int id;
     public int kind;
+    public int price;
     public String srcImage;
     public Image image;
     public int state;
@@ -15,6 +16,7 @@ public class Card {
 		this.srcImage = srcImage;
 		this.image = image;
 		this.state = state;
+		this.price = id - kind * 100;
 	}
 	public String getSrcImage() {
 		return srcImage;
@@ -41,6 +43,8 @@ public class Card {
 		return kind;
 	}
     
-    
+    public int getPrice(){
+    	return price;
+    }
 
 }
