@@ -45,24 +45,25 @@ public class Durak_game implements EntryPoint {
   private int mainKind;
 
   public void onModuleLoad() {
+	prepareGame();  
 	  // Check login status using login service.
-    LoginServiceAsync loginService = GWT.create(LoginService.class);
-    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
-      public void onFailure(Throwable error) {
-      }
-
-      public void onSuccess(LoginInfo result) {
-        loginInfo = result;
-        if(loginInfo.isLoggedIn()) {
-          //Window.alert("now we can start the game");
-          prepareGame();
-          //startGame();
-        } else {
-          loadLogin();
-          Window.alert("Please log in before game starts");
-        }
-      }
-    });
+//    LoginServiceAsync loginService = GWT.create(LoginService.class);
+//    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+//      public void onFailure(Throwable error) {
+//      }
+//
+//      public void onSuccess(LoginInfo result) {
+//        loginInfo = result;
+//        if(loginInfo.isLoggedIn()) {
+//          //Window.alert("now we can start the game");
+//          prepareGame();
+//          //startGame();
+//        } else {
+//          loadLogin();
+//          Window.alert("Please log in before game starts");
+//        }
+//      }
+//    });
   }
 
 private void moveTableCardsToTrash() {
@@ -77,9 +78,9 @@ private void moveTableCardsToTrash() {
 private void prepareGame() {
 	//absolutePanel = new AbsolutePanel();
 	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
-  	absolutePanel.setSize("1200px", "650px");
+  	absolutePanel.setSize("500px", "650px");
   	
-  	absolutePanel.add(firstPlayerNextMoveButton,450,260);
+  	absolutePanel.add(firstPlayerNextMoveButton,400,260);
   	firstPlayerNextMoveButton.setText("Next move");
   	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler);
   	
@@ -127,7 +128,9 @@ private void prepareGame() {
   
   private void repaintPlayerCards(int playerNo){
 	  for(int i=0;i<players[playerNo].size();i++){
-			moveCard(players[playerNo].get(i).getImage(),20 + i%12*80, (playerNo==0)?10+i/12*40:417+i/12*40);
+		    int maxCardInRow = 6;
+			moveCard(players[playerNo].get(i).getImage(),20 + i%maxCardInRow*80, 
+					(playerNo==0)?10+i/maxCardInRow*40:417+i/maxCardInRow*40);
 	  }
   }
   
