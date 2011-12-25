@@ -273,7 +273,7 @@ private boolean isValidSecondCard(Card card) {
 }
 
 private void moveToNextPlayer() {
-	Window.alert("current player" + currentPlayer);
+	//Window.alert("current player" + currentPlayer);
 	currentPlayer = currentPlayer==0?1:0;
 }
 
