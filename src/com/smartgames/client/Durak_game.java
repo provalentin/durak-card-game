@@ -182,7 +182,7 @@ private MouseOverHandler mouseOverHandler = new MouseOverHandler(){
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			playThisCard(event);
+			playThisCard((Image)event.getSource());
 			
 		}
 	};
@@ -195,8 +195,7 @@ private void loadLogin() {
     RootPanel.get("loginItem").add(loginPanel);
 }
 
-private void playThisCard(ClickEvent event) {
-	Image image = (Image)event.getSource();
+private void playThisCard(Image image) {
 	String url = image.getUrl();
 	url = url.substring(url.length()-14,url.length());
 	Card card = findCard(url);
@@ -205,11 +204,11 @@ private void playThisCard(ClickEvent event) {
 		if(size<=12){
 			if(size%2==0 ){
 				if(isValidSecondCard(card)){
-					playThisCard(image, size, card);
+					moveThisCard(image, size, card);
 				}
 			}else{
 				if(isValidFirstCard(card)){
-					playThisCard(image, size, card);
+					moveThisCard(image, size, card);
 				}
 			}
 		}
@@ -236,7 +235,7 @@ private boolean isValidFirstCard(Card card) {
 	return false;
 }
 
-private void playThisCard(Image image, int size, Card card) {
+private void moveThisCard(Image image, int size, Card card) {
 	players[currentPlayer].remove(card);
 	tableCards.add(card);
 	moveCard(image,120 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
@@ -260,6 +259,9 @@ private boolean isValidSecondCard(Card card) {
 private void moveToNextPlayer() {
 	//Window.alert("current player" + currentPlayer);
 	currentPlayer = currentPlayer==0?1:0;
+	if(currentPlayer == 0) {
+		
+	}
 }
 
 private boolean isCardFound(String url) {
