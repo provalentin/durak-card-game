@@ -151,9 +151,10 @@ private void prepareGame() {
 		// TODO Auto-generated method stub
 		if(tableCards.size()%2==0){
 	    	moveTableCardsToTrash();
-	    	moveToNextPlayer();
+	    	
 	    }else{
 	    	moveTableCardsToCurrentPlayer();
+	    	moveToNextPlayer();
 	    }
 	    servefirstPlayer();
     	serveSecondPlayer();
