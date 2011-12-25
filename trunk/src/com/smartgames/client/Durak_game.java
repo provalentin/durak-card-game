@@ -260,7 +260,17 @@ private void moveToNextPlayer() {
 	//Window.alert("current player" + currentPlayer);
 	currentPlayer = currentPlayer==0?1:0;
 	if(currentPlayer == 0) {
-		
+		makeComputerNextMove();
+	}
+}
+
+private void makeComputerNextMove() {
+	// TODO Auto-generated method stub
+	Random random = new Random();
+	for(int i=0;i<players[0].size();i++){
+		int number = random.nextInt(players[0].size());
+		Window.alert("#"+number);
+		playThisCard(players[0].get(number).getImage());
 	}
 }
 
