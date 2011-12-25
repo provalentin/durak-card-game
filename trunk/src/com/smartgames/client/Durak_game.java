@@ -45,21 +45,6 @@ public class Durak_game implements EntryPoint {
   private int mainKind;
 
   public void onModuleLoad() {
-  	firstPlayerNextMoveButton.setText("Next move");
-	  //for nice visual
-	//prepareGame();
-	//firstPlayerNextMoveButton.setText("next move");
-  	//firstPlayerNextMoveButton.setHTML("1");
-  	
-//  	absolutePanel.add(firstPlayerNextMoveButton,600,140);
-//  	secondPlayerNextMoveButton.setText("Next move");
-//  	//secondPlayerNextMoveButton.setText("next move");
-//  	//secondPlayerNextMoveButton.setHTML("2");
-//  	absolutePanel.add(secondPlayerNextMoveButton, 600, 380);
-//  	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler1);
-//  	secondPlayerNextMoveButton.addClickHandler(nextMoveClickHandler2);
-	  
-	  
 	  // Check login status using login service.
     LoginServiceAsync loginService = GWT.create(LoginService.class);
     loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
