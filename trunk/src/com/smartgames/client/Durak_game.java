@@ -90,7 +90,6 @@ private void moveTableCardsToTrash() {
 }
 
 private void prepareGame() {
-	//Window.alert("preparing game");
 	//absolutePanel = new AbsolutePanel();
 	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
   	absolutePanel.setSize("1200px", "650px");
@@ -116,8 +115,6 @@ private void prepareGame() {
   	mainKind = cardPack.get(0).getKind();
   	moveCard(cardPack.get(0).getImage(), 0,250);
   	cardPack.get(0).getImage().setUrl(cardPack.get(0).getSrcImage());
-  	//removeAndAddImage(cardPack.get(0),0,250);
-  	
 }
 
   private void serveSecondPlayer() {
@@ -203,7 +200,6 @@ private MouseOverHandler mouseOverHandler = new MouseOverHandler(){
 			
 		}
 	};
-
   
 private void loadLogin() {
     // Assemble login panel.
@@ -212,8 +208,6 @@ private void loadLogin() {
     loginPanel.add(signInLink);
     RootPanel.get("loginItem").add(loginPanel);
 }
-
-
 
 private void playThisCard(ClickEvent event) {
 	Image image = (Image)event.getSource();
@@ -302,6 +296,5 @@ private void moveCard(Image image, int newX, int newY){
 	//absolutePanel.add(image,newX, newY);
 	CustomAnimation animation = new CustomAnimation(image.getElement());
     animation.scrollTo(newX, newY, 500);
-
 }
 }
