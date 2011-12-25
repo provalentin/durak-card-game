@@ -77,7 +77,9 @@ private void moveTableCardsToTrash() {
 
 private void prepareGame() {
 	//absolutePanel = new AbsolutePanel();
-	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
+	RootPanel rootPanel = RootPanel.get("rootItem");
+	rootPanel.setSize("505", "660");
+	rootPanel.add(absolutePanel, 10, 10);
   	absolutePanel.setSize("500px", "650px");
   	
   	absolutePanel.add(firstPlayerNextMoveButton,400,260);
