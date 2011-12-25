@@ -216,30 +216,22 @@ private void loadLogin() {
 
 
 private void playThisCard(ClickEvent event) {
-	
 	Image image = (Image)event.getSource();
-	
-	//Window.alert(image.getUrl());
 	String url = image.getUrl();
 	url = url.substring(url.length()-14,url.length());
-	//Window.alert("-"+url);
-	//Window.alert(url);
 	Card card = findCard(url);
 	if (isCardFound(url)) {
 		int size = tableCards.size()+1;
 		if(size<=12){
 			if(size%2==0 ){
 				if(isValidSecondCard(card)){
-					//Window.alert(card.getId()+"-"+size);
 					playThisCard(image, size, card);
 				}
 			}else{
 				if(isValidFirstCard(card)){
-					//Window.alert(card.getId()+"-"+size);
 					playThisCard(image, size, card);
 				}
 			}
-			//Window.alert(card.getId()+"-"+size);
 		}
 		if(size==12){
 			moveTableCardsToTrash();
@@ -247,10 +239,7 @@ private void playThisCard(ClickEvent event) {
 		  	serveSecondPlayer();
 		  	moveToNextPlayer();
 		}
-		
-		//Window.alert(card.getId()+"-"+size);
 	}
-	
 }
 
 private boolean isValidFirstCard(Card card) {
@@ -289,6 +278,7 @@ private boolean isValidSecondCard(Card card) {
 }
 
 private void moveToNextPlayer() {
+	Window.alert("current player" + currentPlayer);
 	currentPlayer = currentPlayer==0?1:0;
 }
 
