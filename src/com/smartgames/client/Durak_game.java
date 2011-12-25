@@ -12,17 +12,13 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class Durak_game implements EntryPoint {
@@ -55,13 +51,13 @@ public class Durak_game implements EntryPoint {
 	//firstPlayerNextMoveButton.setText("next move");
   	//firstPlayerNextMoveButton.setHTML("1");
   	
-  	absolutePanel.add(firstPlayerNextMoveButton,600,140);
-  	secondPlayerNextMoveButton.setText("Next move");
-  	//secondPlayerNextMoveButton.setText("next move");
-  	//secondPlayerNextMoveButton.setHTML("2");
-  	absolutePanel.add(secondPlayerNextMoveButton, 600, 380);
-  	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler1);
-  	secondPlayerNextMoveButton.addClickHandler(nextMoveClickHandler2);
+//  	absolutePanel.add(firstPlayerNextMoveButton,600,140);
+//  	secondPlayerNextMoveButton.setText("Next move");
+//  	//secondPlayerNextMoveButton.setText("next move");
+//  	//secondPlayerNextMoveButton.setHTML("2");
+//  	absolutePanel.add(secondPlayerNextMoveButton, 600, 380);
+//  	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler1);
+//  	secondPlayerNextMoveButton.addClickHandler(nextMoveClickHandler2);
 	  
 	  
 	  // Check login status using login service.
@@ -99,11 +95,9 @@ private void prepareGame() {
 	RootPanel.get("rootItem").add(absolutePanel, 10, 10);
   	absolutePanel.setSize("1200px", "650px");
   	
-  	absolutePanel.add(firstPlayerNextMoveButton,600,140);
-  	secondPlayerNextMoveButton.setText("Next move");
-  	absolutePanel.add(secondPlayerNextMoveButton, 600, 380);
-  	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler1);
-  	secondPlayerNextMoveButton.addClickHandler(nextMoveClickHandler2);
+  	absolutePanel.add(firstPlayerNextMoveButton,450,260);
+  	firstPlayerNextMoveButton.setText("Next move");
+  	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler);
   	
   	for (int i=0; i<36;i++){
   		int id   = (i/9 + 1) * 100 + i%9 + 6;
@@ -153,39 +147,26 @@ private void prepareGame() {
 	  }
   }
   
-  private ClickHandler nextMoveClickHandler1 = new ClickHandler(){
+  private ClickHandler nextMoveClickHandler = new ClickHandler(){
 
 	@Override
 	public void onClick(ClickEvent event) {
 		// TODO Auto-generated method stub
-		handleNextMove(0);
-	}
-	  
-  };
-
-  private ClickHandler nextMoveClickHandler2 = new ClickHandler(){
-
-	@Override
-	public void onClick(ClickEvent event) {
-		// TODO Auto-generated method stub
-		handleNextMove(1);
-	}
-	  
-  };
-	  
-  private void handleNextMove(int playerNo) {
-		// TODO Auto-generated method stub
-	    if(playerNo==currentPlayer){
-		    if(tableCards.size()%2==0){
-		    	moveTableCardsToTrash();
-		    	moveToNextPlayer();
-		    }else{
-		    	moveTableCardsToCurrentPlayer();
-		    }
-		    servefirstPlayer();
-	    	serveSecondPlayer();
-	    	
+		if(tableCards.size()%2==0){
+	    	moveTableCardsToTrash();
+	    	moveToNextPlayer();
+	    }else{
+	    	moveTableCardsToCurrentPlayer();
 	    }
+	    servefirstPlayer();
+    	serveSecondPlayer();
+	}
+	  
+  };
+
+  private void handleNextMove() {
+		// TODO Auto-generated method stub
+		    
   }
   private void moveTableCardsToCurrentPlayer() {
 	// TODO Auto-generated method stub
@@ -330,7 +311,7 @@ private void moveCard(Image image, int newX, int newY){
 	//image.removeFromParent();
 	//absolutePanel.add(image,newX, newY);
 	CustomAnimation animation = new CustomAnimation(image.getElement());
-    animation.scrollTo(newX, newY, 1000);
+    animation.scrollTo(newX, newY, 500);
 
 }
 }
