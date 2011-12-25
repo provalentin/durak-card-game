@@ -295,12 +295,11 @@ private void handleNextMove() {
 	Window.alert("#handeNextMove-current player" + currentPlayer);
 	if(tableCards.size()%2==0){
 		moveTableCardsToTrash();
-		moveToNextPlayer();
 	}else{
 		moveTableCardsToCurrentPlayer();
-		moveToNextPlayer();
 	}
 	servefirstPlayer();
 	serveSecondPlayer();
+	moveToNextPlayer();
 }
 }
