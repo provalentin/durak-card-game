@@ -249,7 +249,7 @@ private boolean isValidSecondCard(Card card) {
 }
 
 private void moveToNextPlayer() {
-	Window.alert("#moveToNextPlayer-current player" + currentPlayer);
+	//Window.alert("#moveToNextPlayer-current player" + currentPlayer);
 	currentPlayer = currentPlayer==0?1:0;
 	if(currentPlayer == 0) {
 		makeComputerNextMove();
@@ -262,7 +262,7 @@ private void makeComputerNextMove() {
 	Random random = new Random();
 	for(int i=0;i<players[0].size()*2 ;i++){
 		int number = random.nextInt(players[0].size());
-		Window.alert("#"+number);
+		//Window.alert("#"+number);
 		if(playThisCard(players[0].get(number).getImage())) return;
 	}
 	handleNextMove();
@@ -292,7 +292,7 @@ private void moveCard(Image image, int newX, int newY){
 }
 
 private void handleNextMove() {
-	Window.alert("#handeNextMove-current player" + currentPlayer);
+	//Window.alert("#handeNextMove-current player" + currentPlayer);
 	if(tableCards.size()%2==0){
 		moveTableCardsToTrash();
 	}else{
