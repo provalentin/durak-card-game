@@ -114,11 +114,13 @@ private void prepareGame() {
   
   private void servePlayer(int playerNo){
 	  for(int i=players[playerNo].size();i<6;i++){
-			players[playerNo].add(cardPack.remove(cardPack.size()-1));
-			players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
-			players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
-			players[playerNo].get(i).getImage().addClickHandler(clickHandler);
-			players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
+		  	if(cardPack.size()>0){
+		  		players[playerNo].add(cardPack.remove(cardPack.size()-1));
+		  		players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
+		  		players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
+		  		players[playerNo].get(i).getImage().addClickHandler(clickHandler);
+		  		players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
+		  	} 	
 		}
 	  repaintPlayerCards(playerNo);
   }
@@ -288,7 +290,7 @@ private void moveCard(Image image, int newX, int newY){
 	//image.removeFromParent();
 	//absolutePanel.add(image,newX, newY);
 	CustomAnimation animation = new CustomAnimation(image.getElement());
-    animation.scrollTo(newX, newY, 500);
+    animation.scrollTo(newX, newY, 2500);
 }
 
 private void handleNextMove() {
