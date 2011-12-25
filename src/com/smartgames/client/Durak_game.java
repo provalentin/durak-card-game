@@ -134,23 +134,12 @@ private void prepareGame() {
 	@Override
 	public void onClick(ClickEvent event) {
 		// TODO Auto-generated method stub
-		if(tableCards.size()%2==0){
-	    	moveTableCardsToTrash();
-	    	
-	    }else{
-	    	moveTableCardsToCurrentPlayer();
-	    	moveToNextPlayer();
-	    }
-	    servefirstPlayer();
-    	serveSecondPlayer();
+		handleNextMove();
 	}
 	  
   };
 
-  private void handleNextMove() {
-		// TODO Auto-generated method stub
-		    
-  }
+  
   private void moveTableCardsToCurrentPlayer() {
 	// TODO Auto-generated method stub
 		players[currentPlayer].addAll(tableCards);
@@ -195,7 +184,7 @@ private void loadLogin() {
     RootPanel.get("loginItem").add(loginPanel);
 }
 
-private void playThisCard(Image image) {
+private boolean playThisCard(Image image) {
 	String url = image.getUrl();
 	url = url.substring(url.length()-14,url.length());
 	Card card = findCard(url);
@@ -205,10 +194,12 @@ private void playThisCard(Image image) {
 			if(size%2==0 ){
 				if(isValidSecondCard(card)){
 					moveThisCard(image, size, card);
+					return true;
 				}
 			}else{
 				if(isValidFirstCard(card)){
 					moveThisCard(image, size, card);
+					return true;
 				}
 			}
 		}
@@ -219,6 +210,7 @@ private void playThisCard(Image image) {
 		  	moveToNextPlayer();
 		}
 	}
+	return false;
 }
 
 private boolean isValidFirstCard(Card card) {
@@ -270,8 +262,10 @@ private void makeComputerNextMove() {
 	for(int i=0;i<players[0].size();i++){
 		int number = random.nextInt(players[0].size());
 		Window.alert("#"+number);
-		playThisCard(players[0].get(number).getImage());
+		if(playThisCard(players[0].get(number).getImage())) return;
 	}
+	handleNextMove();
+	
 }
 
 private boolean isCardFound(String url) {
@@ -294,5 +288,17 @@ private void moveCard(Image image, int newX, int newY){
 	//absolutePanel.add(image,newX, newY);
 	CustomAnimation animation = new CustomAnimation(image.getElement());
     animation.scrollTo(newX, newY, 500);
+}
+
+private void handleNextMove() {
+	if(tableCards.size()%2==0){
+		moveTableCardsToTrash();
+		
+	}else{
+		moveTableCardsToCurrentPlayer();
+		moveToNextPlayer();
+	}
+	servefirstPlayer();
+	serveSecondPlayer();
 }
 }
