@@ -4,6 +4,8 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -12,6 +14,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -32,6 +35,7 @@ public class Durak_game implements EntryPoint {
   private ArrayList<Card> trashCards = new ArrayList<Card>();
   private ArrayList<Card> firstPlayerCards = new ArrayList<Card>();
   private ArrayList<Card> secondPlayerCards = new ArrayList<Card>();
+  private ArrayList<FocusPanel> secondPlayerFocusPanels = new ArrayList<FocusPanel>();
   private ArrayList<Card>[] players =  (ArrayList<Card>[])new ArrayList[]{firstPlayerCards,secondPlayerCards};
   /**
    * Entry point method.
@@ -78,11 +82,11 @@ private void moveTableCardsToTrash() {
 private void prepareGame() {
 	//absolutePanel = new AbsolutePanel();
 	RootPanel rootPanel = RootPanel.get("rootItem");
-	rootPanel.setSize("505", "660");
+	rootPanel.setSize("805", "660");
 	rootPanel.add(absolutePanel, 10, 10);
-  	absolutePanel.setSize("500px", "650px");
+  	absolutePanel.setSize("800px", "650px");
   	
-  	absolutePanel.add(firstPlayerNextMoveButton,400,260);
+  	absolutePanel.add(firstPlayerNextMoveButton,600,260);
   	firstPlayerNextMoveButton.setText("Next move");
   	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler);
   	
@@ -122,7 +126,9 @@ private void prepareGame() {
 		  		players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
 		  		players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
 		  		players[playerNo].get(i).getImage().addClickHandler(clickHandler);
-		  		players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
+		  		//if(playerNo==1) {
+		  			players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
+		  		//}
 		  	} 	
 		}
 	  repaintPlayerCards(playerNo);
@@ -130,7 +136,19 @@ private void prepareGame() {
   
   private void repaintPlayerCards(int playerNo){
 	  for(int i=0;i<players[playerNo].size();i++){
+		  secondPlayerFocusPanels.get(i).removeFromParent();
+	  }
+	  for(int i=0;i<players[playerNo].size();i++){
 		    int maxCardInRow = 6;
+		    if(playerNo==1){
+	               //players[playerNo].get(i).getImage().removeFromParent();
+	               FocusPanel focusPanel = new FocusPanel();
+	               focusPanel.setSize("75px", "105px");
+	               //focusPanel.add(players[playerNo].get(i).getImage());
+	               focusPanel.addKeyDownHandler(clickFocusHandler);
+	               absolutePanel.add(focusPanel,20 + i%6*80,417+i/6*40 );
+	               secondPlayerFocusPanels.add(focusPanel);
+	        }   
 			moveCard(players[playerNo].get(i).getImage(),20 + i%maxCardInRow*80, 
 					(playerNo==0)?10+i/maxCardInRow*40:417+i/maxCardInRow*40);
 	  }
@@ -146,14 +164,27 @@ private void prepareGame() {
 	  
   };
 
+  private KeyDownHandler clickFocusHandler = new KeyDownHandler() {
+      @Override               
+      public void onKeyDown(KeyDownEvent event) {                     
+    	  // TODO Auto-generated methodstub                    
+    	  //Window.alert("Paff"+event.getNativeKeyCode());                        
+    	  if(event.getNativeKeyCode()==13){                  
+    		  int leftIndex = ((FocusPanel)event.getSource()).getAbsoluteLeft() / 80;
+    		  int topIndex = (((FocusPanel)event.getSource()).getAbsoluteTop() - 427) / 40;
+    		  Window.alert("Paff" + ((FocusPanel)event.getSource()).getAbsoluteLeft() + "-" + ((FocusPanel)event.getSource()).getAbsoluteTop());   
+    		  playThisCard(players[1].get(leftIndex + topIndex*6).getImage());
+    	  } 
+      }
+  };
   
   private void moveTableCardsToCurrentPlayer() {
-	// TODO Auto-generated method stub
-		players[currentPlayer].addAll(tableCards);
-		tableCards.clear();
-}
+	  	// TODO Auto-generated method stub
+	  	players[currentPlayer].addAll(tableCards);
+	  	tableCards.clear();
+  }
 
-private MouseOverHandler mouseOverHandler = new MouseOverHandler(){
+  private MouseOverHandler mouseOverHandler = new MouseOverHandler(){
 
 		@Override
 		public void onMouseOver(MouseOverEvent event) {
@@ -262,6 +293,7 @@ private void moveToNextPlayer() {
 		makeComputerNextMove();
 		
 	}
+	
 }
 
 private void makeComputerNextMove() {
