@@ -135,8 +135,10 @@ private void prepareGame() {
   }
   
   private void repaintPlayerCards(int playerNo){
-	  for(int i=0;i<players[playerNo].size();i++){
-		  secondPlayerFocusPanels.get(i).removeFromParent();
+	  if(playerNo==1){
+		  for(int i=0;i<secondPlayerFocusPanels.size();i++){
+			  secondPlayerFocusPanels.get(i).removeFromParent();
+		  }
 	  }
 	  for(int i=0;i<players[playerNo].size();i++){
 		    int maxCardInRow = 6;
@@ -169,14 +171,23 @@ private void prepareGame() {
       public void onKeyDown(KeyDownEvent event) {                     
     	  // TODO Auto-generated methodstub                    
     	  //Window.alert("Paff"+event.getNativeKeyCode());                        
-    	  if(event.getNativeKeyCode()==13){                  
-    		  int leftIndex = ((FocusPanel)event.getSource()).getAbsoluteLeft() / 80;
-    		  int topIndex = (((FocusPanel)event.getSource()).getAbsoluteTop() - 427) / 40;
-    		  Window.alert("Paff" + ((FocusPanel)event.getSource()).getAbsoluteLeft() + "-" + ((FocusPanel)event.getSource()).getAbsoluteTop());   
-    		  playThisCard(players[1].get(leftIndex + topIndex*6).getImage());
+    	  if(event.getNativeKeyCode()==13){ 
+    		  FocusPanel focusPanel = (FocusPanel)event.getSource();
+    		  playThisCard(players[1].get(calculateIndex(focusPanel)).getImage());
     	  } 
       }
   };
+  
+  private ClickHandler clickFocusPanelHandler = new ClickHandler() {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			FocusPanel focusPanel = (FocusPanel)event.getSource();
+  		  	playThisCard(players[1].get(calculateIndex(focusPanel)).getImage());
+			
+		}
+	};
   
   private void moveTableCardsToCurrentPlayer() {
 	  	// TODO Auto-generated method stub
@@ -293,6 +304,8 @@ private void moveToNextPlayer() {
 		makeComputerNextMove();
 		
 	}
+	repaintPlayerCards(1);
+	repaintPlayerCards(0);
 	
 }
 
@@ -340,5 +353,11 @@ private void handleNextMove() {
 	servefirstPlayer();
 	serveSecondPlayer();
 	moveToNextPlayer();
+}
+
+private int calculateIndex(FocusPanel focusPanel) {
+	int leftIndex = focusPanel.getAbsoluteLeft() / 80;
+	int topIndex = (focusPanel.getAbsoluteTop() - 427) / 40;
+	return leftIndex + 6 * topIndex;
 }
 }
