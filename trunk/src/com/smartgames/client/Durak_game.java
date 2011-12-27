@@ -300,6 +300,20 @@ private boolean isValidSecondCard(Card card) {
 
 private void moveToNextPlayer() {
 	//Window.alert("#moveToNextPlayer-current player" + currentPlayer);
+	if(cardPack.size()==0) {
+		if(firstPlayerCards.size()==0 && secondPlayerCards.size()==0){
+			Window.alert("Equal");
+			return;
+		}
+		if(firstPlayerCards.size()==0){
+			Window.alert("You lose :-(");
+			return;
+		}
+		if(secondPlayerCards.size()==0){
+			Window.alert("You win :-)");
+			return;
+		}
+	}
 	currentPlayer = currentPlayer==0?1:0;
 	if(currentPlayer == 0) {
 		makeComputerNextMove();
