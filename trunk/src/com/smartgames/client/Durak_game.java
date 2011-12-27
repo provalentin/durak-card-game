@@ -30,6 +30,7 @@ public class Durak_game implements EntryPoint {
   private Button firstPlayerNextMoveButton = new Button("2");
   private Button secondPlayerNextMoveButton = new Button("2");
   
+  
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
   private ArrayList<Card> trashCards = new ArrayList<Card>();
@@ -47,6 +48,7 @@ public class Durak_game implements EntryPoint {
   private Anchor signOutLink = new Anchor("Sign Out");
   private int currentPlayer = 1;
   private int mainKind;
+  private boolean isGameOver;
 
   public void onModuleLoad() {
 	prepareGame();  
@@ -303,24 +305,25 @@ private void moveToNextPlayer() {
 	if(cardPack.size()==0) {
 		if(firstPlayerCards.size()==0 && secondPlayerCards.size()==0){
 			Window.alert("Equal");
-			return;
+			isGameOver = true;
 		}
 		if(firstPlayerCards.size()==0){
 			Window.alert("You lose :-(");
-			return;
+			isGameOver = true;
 		}
 		if(secondPlayerCards.size()==0){
 			Window.alert("You win :-)");
-			return;
+			isGameOver = true;
 		}
 	}
-	currentPlayer = currentPlayer==0?1:0;
-	if(currentPlayer == 0) {
-		makeComputerNextMove();
-		
+	if(!isGameOver){
+		currentPlayer = currentPlayer==0?1:0;
+		if(currentPlayer == 0) {
+			makeComputerNextMove();
+		}
+		repaintPlayerCards(1);
+		repaintPlayerCards(0);
 	}
-	repaintPlayerCards(1);
-	repaintPlayerCards(0);
 	
 }
 
@@ -355,7 +358,7 @@ private void moveCard(Image image, int newX, int newY){
 	//image.removeFromParent();
 	//absolutePanel.add(image,newX, newY);
 	CustomAnimation animation = new CustomAnimation(image.getElement());
-    animation.scrollTo(newX, newY, 2500);
+    animation.scrollTo(newX, newY, 500);
 }
 
 private void handleNextMove() {
