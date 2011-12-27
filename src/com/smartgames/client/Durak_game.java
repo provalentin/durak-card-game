@@ -148,6 +148,7 @@ private void prepareGame() {
 	               focusPanel.setSize("75px", "105px");
 	               //focusPanel.add(players[playerNo].get(i).getImage());
 	               focusPanel.addKeyDownHandler(clickFocusHandler);
+	               focusPanel.addClickHandler(clickFocusPanelHandler);
 	               absolutePanel.add(focusPanel,20 + i%6*80,417+i/6*40 );
 	               secondPlayerFocusPanels.add(focusPanel);
 	        }   
