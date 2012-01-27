@@ -30,7 +30,7 @@ public class Durak_game implements EntryPoint {
   private Button firstPlayerNextMoveButton = new Button("2");
   private Button secondPlayerNextMoveButton = new Button("2");
   
-  
+  private ArrayList<Card> allCards = new ArrayList<Card>();
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
   private ArrayList<Card> trashCards = new ArrayList<Card>();
@@ -98,6 +98,10 @@ private void prepareGame() {
   		cardPack.add(new Card(id, (i/9 + 1), src, new Image("images/0.png"), 0));
   		//Window.alert(""+i);
   	}
+     
+    allCards.addAll(cardPack);
+    Window.alert("all cards = " + allCards); 
+     
   	(new Randoms(new Random())).shuffle(cardPack);
   	for (int i=0; i<cardPack.size();i++){
   		//Window.alert(cardPack.get(i).getSrcImage());
