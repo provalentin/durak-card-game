@@ -1,2 +1,3 @@
 # Module durak_game
 # RPC service class, partial path of RPC policy file
+com.smartgames.client.LoginService, C7146F1F2445EDDD91C0B96EFAE16801.gwt.rpc

@@ -24,12 +24,14 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.smartgames.client.State;
+
 public class Durak_game implements EntryPoint {
 
   private AbsolutePanel absolutePanel = new AbsolutePanel();
   private Button firstPlayerNextMoveButton = new Button("2");
   private Button secondPlayerNextMoveButton = new Button("2");
-  
+  private Button loginButton = new Button("log in");
   private ArrayList<Card> allCards = new ArrayList<Card>();
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
@@ -52,29 +54,14 @@ public class Durak_game implements EntryPoint {
 
   public void onModuleLoad() {
 	prepareGame();  
-	  // Check login status using login service.
-//    LoginServiceAsync loginService = GWT.create(LoginService.class);
-//    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
-//      public void onFailure(Throwable error) {
-//      }
-//
-//      public void onSuccess(LoginInfo result) {
-//        loginInfo = result;
-//        if(loginInfo.isLoggedIn()) {
-//          //Window.alert("now we can start the game");
-//          prepareGame();
-//          //startGame();
-//        } else {
-//          loadLogin();
-//          Window.alert("Please log in before game starts");
-//        }
-//      }
-//    });
+	  
+    
   }
 
 private void moveTableCardsToTrash() {
 	// TODO Auto-generated method stub
 	for(int i=0;i<tableCards.size();i++){
+		tableCards.get(i).setState(State.played);
 		tableCards.get(i).getImage().removeFromParent();
 	}
 	trashCards.addAll(tableCards);
@@ -85,6 +72,8 @@ private void prepareGame() {
 	//absolutePanel = new AbsolutePanel();
 	RootPanel rootPanel = RootPanel.get("rootItem");
 	rootPanel.setSize("805", "660");
+	rootPanel.add(loginButton,800,10);
+	loginButton.addClickHandler(showAllCardsStateClickHandler);
 	rootPanel.add(absolutePanel, 10, 10);
   	absolutePanel.setSize("800px", "650px");
   	
@@ -107,6 +96,8 @@ private void prepareGame() {
   		//Window.alert(cardPack.get(i).getSrcImage());
   		absolutePanel.add(cardPack.get(i).getImage(), 0 + i*5 , 120  + i*5);
   	}
+  	allCards.addAll(cardPack);
+  	
   	
   	servefirstPlayer();
   	serveSecondPlayer();
@@ -128,6 +119,7 @@ private void prepareGame() {
   private void servePlayer(int playerNo){
 	  for(int i=players[playerNo].size();i<6;i++){
 		  	if(cardPack.size()>0){
+		  		cardPack.get(cardPack.size()-1).setState(playerNo + 3);
 		  		players[playerNo].add(cardPack.remove(cardPack.size()-1));
 		  		players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
 		  		players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
@@ -173,6 +165,49 @@ private void prepareGame() {
 	  
   };
 
+  private ClickHandler loginButtonClickHandler = new ClickHandler(){
+	  @Override
+		public void onClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+		  
+		//Check login status using login service.
+	    LoginServiceAsync loginService = GWT.create(LoginService.class);
+	    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
+	      public void onFailure(Throwable error) {
+	      }
+
+	      public void onSuccess(LoginInfo result) {
+	        loginInfo = result;
+	        if(loginInfo.isLoggedIn()) {
+	          //Window.alert("now we can start the game");
+	          //prepareGame();
+	          //startGame();
+        	  signInLink.setVisible(true);
+	          signOutLink.setVisible(false);
+	        } else {
+	          loadLogin();
+	          signInLink.setVisible(false);
+	          signOutLink.setVisible(true);
+	          Window.alert("Please log in before game starts");
+	        }
+	      }
+	    });
+		}
+  };
+  
+  private ClickHandler showAllCardsStateClickHandler = new ClickHandler(){
+	  @Override
+		public void onClick(ClickEvent event) {
+	  
+			String allCardsString = "";
+		  	for(int i=0;i<allCards.size();i++){
+		  		allCardsString += allCards.get(i).getId() 
+		  			+ "-"+allCards.get(i).getState()+"\n";
+		  	}
+		  	Window.alert(allCardsString);
+	  }
+  };
+  
   private KeyDownHandler clickFocusHandler = new KeyDownHandler() {
       @Override               
       public void onKeyDown(KeyDownEvent event) {                     
@@ -198,6 +233,9 @@ private void prepareGame() {
   
   private void moveTableCardsToCurrentPlayer() {
 	  	// TODO Auto-generated method stub
+	  	for(int i=0;i<tableCards.size();i++){
+	  		tableCards.get(i).setState(currentPlayer+3);
+	  	}
 	  	players[currentPlayer].addAll(tableCards);
 	  	tableCards.clear();
   }
@@ -235,9 +273,11 @@ private void prepareGame() {
 private void loadLogin() {
     // Assemble login panel.
     signInLink.setHref(loginInfo.getLoginUrl());
+    signOutLink.setHref(loginInfo.getLogoutUrl());
     loginPanel.add(loginLabel);
     loginPanel.add(signInLink);
-    RootPanel.get("loginItem").add(loginPanel);
+    loginPanel.add(signOutLink);
+    RootPanel.get("loginItem").add(loginPanel,800,50);
 }
 
 private boolean playThisCard(Image image) {
@@ -286,6 +326,7 @@ private boolean isValidFirstCard(Card card) {
 private void moveThisCard(Image image, int size, Card card) {
 	players[currentPlayer].remove(card);
 	tableCards.add(card);
+	card.setState(State.onTable);
 	moveCard(image,120 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);
 	moveToNextPlayer();
 }
