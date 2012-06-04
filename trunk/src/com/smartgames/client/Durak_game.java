@@ -198,14 +198,23 @@ private void prepareGame() {
   private ClickHandler showAllCardsStateClickHandler = new ClickHandler(){
 	  @Override
 		public void onClick(ClickEvent event) {
-	  
-			String allCardsString = "";
-		  	for(int i=0;i<allCards.size();i++){
-		  		allCardsString += allCards.get(i).getId() 
-		  			+ "-"+allCards.get(i).getState()+"\n";
-		  	}
-		  	Window.alert(allCardsString);
+		  	Window.alert(allCardsStateToString());
 	  }
+  };
+  
+  private String allCardsStateToString(){
+	  String allCardsString = "";
+	  	for(int i=0;i<allCards.size();i++){
+	  		allCardsString += allCards.get(i).getState();
+	  	}
+	  return allCardsString;
+  };
+  
+  private void stringToAllCardsState(String savedString){
+	  for(int i=0;i<allCards.size();i++){
+	  		allCards.get(i).setState(Integer.parseInt(savedString.charAt(i)+""));
+	  	}
+	  return;
   };
   
   private KeyDownHandler clickFocusHandler = new KeyDownHandler() {
