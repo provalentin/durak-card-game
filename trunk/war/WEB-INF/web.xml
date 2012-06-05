@@ -27,6 +27,17 @@
     <url-pattern>/durak_game/greet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>stockService</servlet-name>
+    <servlet-class>com.smartgames.server.StockServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>stockService</servlet-name>
+    <url-pattern>/durak_game/stock</url-pattern>
+  </servlet-mapping>
+  
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Durak_game.html</welcome-file>

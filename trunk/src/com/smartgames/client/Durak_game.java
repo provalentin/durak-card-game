@@ -51,6 +51,8 @@ public class Durak_game implements EntryPoint {
   private int currentPlayer = 1;
   private int mainKind;
   private boolean isGameOver;
+  
+  private final StockServiceAsync stockService = GWT.create(StockService.class);
 
   public void onModuleLoad() {
 	prepareGame();  
@@ -88,8 +90,8 @@ private void prepareGame() {
   		//Window.alert(""+i);
   	}
      
-    allCards.addAll(cardPack);
-    Window.alert("all cards = " + allCards); 
+//    allCards.addAll(cardPack);
+//    Window.alert("all cards = " + allCards); 
      
   	(new Randoms(new Random())).shuffle(cardPack);
   	for (int i=0; i<cardPack.size();i++){
@@ -198,9 +200,21 @@ private void prepareGame() {
   private ClickHandler showAllCardsStateClickHandler = new ClickHandler(){
 	  @Override
 		public void onClick(ClickEvent event) {
+		  	addStock(allCardsStateToString());
 		  	Window.alert(allCardsStateToString());
 	  }
   };
+  
+  private void addStock(final String symbol) {
+	    stockService.addStock(symbol, new AsyncCallback<Void>() {
+	      public void onFailure(Throwable error) {
+	    	Window.alert("addStock reauest failed");
+	      }
+	      public void onSuccess(Void ignore) {
+	        Window.alert(symbol + " saved");
+	      }
+	    });
+	  }
   
   private String allCardsStateToString(){
 	  String allCardsString = "";
