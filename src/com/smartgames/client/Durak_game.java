@@ -32,6 +32,7 @@ public class Durak_game implements EntryPoint {
   private Button firstPlayerNextMoveButton = new Button("2");
   private Button secondPlayerNextMoveButton = new Button("2");
   private Button loginButton = new Button("log in");
+  private Button saveGameStateButton = new Button("save game state");
   private ArrayList<Card> allCards = new ArrayList<Card>();
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
@@ -75,7 +76,9 @@ private void prepareGame() {
 	RootPanel rootPanel = RootPanel.get("rootItem");
 	rootPanel.setSize("805", "660");
 	rootPanel.add(loginButton,800,10);
-	loginButton.addClickHandler(showAllCardsStateClickHandler);
+	rootPanel.add(saveGameStateButton, 800, 150);
+	loginButton.addClickHandler(loginButtonClickHandler);
+	saveGameStateButton.addClickHandler(showAllCardsStateClickHandler);
 	rootPanel.add(absolutePanel, 10, 10);
   	absolutePanel.setSize("800px", "650px");
   	
@@ -90,7 +93,7 @@ private void prepareGame() {
   		//Window.alert(""+i);
   	}
      
-//    allCards.addAll(cardPack);
+    allCards.addAll(cardPack);
 //    Window.alert("all cards = " + allCards); 
      
   	(new Randoms(new Random())).shuffle(cardPack);
@@ -98,7 +101,7 @@ private void prepareGame() {
   		//Window.alert(cardPack.get(i).getSrcImage());
   		absolutePanel.add(cardPack.get(i).getImage(), 0 + i*5 , 120  + i*5);
   	}
-  	allCards.addAll(cardPack);
+//  	allCards.addAll(cardPack);
   	
   	
   	servefirstPlayer();
