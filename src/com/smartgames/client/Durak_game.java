@@ -188,10 +188,10 @@ private void prepareGame() {
 	          //prepareGame();
 	          //startGame();
         	  signInLink.setVisible(true);
-	          signOutLink.setVisible(false);
+	          signOutLink.setVisible(true);
 	        } else {
 	          loadLogin();
-	          signInLink.setVisible(false);
+	          signInLink.setVisible(true);
 	          signOutLink.setVisible(true);
 	          Window.alert("Please log in before game starts");
 	        }
@@ -388,6 +388,7 @@ private void moveToNextPlayer() {
 		}
 	}
 	if(!isGameOver){
+		addStock(allCardsStateToString());
 		currentPlayer = currentPlayer==0?1:0;
 		if(currentPlayer == 0) {
 			makeComputerNextMove();
