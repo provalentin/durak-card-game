@@ -214,7 +214,7 @@ private void prepareGame() {
 	    	Window.alert("addStock reauest failed");
 	      }
 	      public void onSuccess(Void ignore) {
-	        Window.alert(symbol + " saved");
+	        //Window.alert(symbol + " saved");
 	      }
 	    });
 	  }
