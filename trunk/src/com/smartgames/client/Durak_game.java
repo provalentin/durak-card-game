@@ -33,6 +33,7 @@ public class Durak_game implements EntryPoint {
   private Button secondPlayerNextMoveButton = new Button("2");
   private Button loginButton = new Button("log in");
   private Button saveGameStateButton = new Button("save game state");
+  private Button loadGameStateButton = new Button("load game state");
   private ArrayList<Card> allCards = new ArrayList<Card>();
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
@@ -77,8 +78,10 @@ private void prepareGame() {
 	rootPanel.setSize("805", "660");
 	rootPanel.add(loginButton,800,10);
 	rootPanel.add(saveGameStateButton, 800, 150);
+	rootPanel.add(loadGameStateButton, 800, 200);
 	loginButton.addClickHandler(loginButtonClickHandler);
 	saveGameStateButton.addClickHandler(showAllCardsStateClickHandler);
+	loadGameStateButton.addClickHandler(loadGameStateButtonClickHandler);
 	rootPanel.add(absolutePanel, 10, 10);
   	absolutePanel.setSize("800px", "650px");
   	
@@ -208,10 +211,29 @@ private void prepareGame() {
 	  }
   };
   
+  private ClickHandler loadGameStateButtonClickHandler = new ClickHandler(){
+	  @Override
+		public void onClick(ClickEvent event) {
+		  stockService.getStocks(new AsyncCallback<String[]>() {
+	        public void onFailure(Throwable error) {
+	    	  Window.alert("addStock request failed");
+	        }
+			  
+			@Override
+			public void onSuccess(String[] result) {
+				// TODO Auto-generated method stub
+				Window.alert(result[result.length-1]);
+			}
+		    });
+		  	
+//		  	Window.alert("restoring game state");
+	  }
+  };
+  
   private void addStock(final String symbol) {
 	    stockService.addStock(symbol, new AsyncCallback<Void>() {
 	      public void onFailure(Throwable error) {
-	    	Window.alert("addStock reauest failed");
+	    	Window.alert("addStock request failed");
 	      }
 	      public void onSuccess(Void ignore) {
 	        //Window.alert(symbol + " saved");

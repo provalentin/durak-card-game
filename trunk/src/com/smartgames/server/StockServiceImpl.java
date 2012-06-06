@@ -11,6 +11,11 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -28,6 +33,7 @@ StockService {
 private static final Logger LOG = Logger.getLogger(StockServiceImpl.class.getName());
   private static final PersistenceManagerFactory PMF =
       JDOHelper.getPersistenceManagerFactory("transactions-optional");
+  private static MemcacheService keycache = MemcacheServiceFactory.getMemcacheService();
 
   public void addStock(String symbol) throws NotLoggedInException {
     checkLoggedIn();
@@ -37,6 +43,8 @@ private static final Logger LOG = Logger.getLogger(StockServiceImpl.class.getNam
       pm.makePersistent(new Stock(getUser(), symbol));
     } finally {
       pm.close();
+      Key key = KeyFactory.createKey("Customer", "Vasiliy");
+      keycache.put("12345678", symbol);
     }
   }
 
@@ -68,10 +76,19 @@ private static final Logger LOG = Logger.getLogger(StockServiceImpl.class.getNam
     PersistenceManager pm = getPersistenceManager();
     List<String> symbols = new ArrayList<String>();
     LOG.log(Level.INFO, "starting getting stock records");
+    
+//    Entity e = (Entity) keycache.get("12345678");;
+//    if (e != null) {
+//    	String[] result = new String[1];
+//    	result[0] = e.toString();
+//      return result;
+//    }
+    
     try {
       Query q = pm.newQuery(Stock.class, "user == u");
       q.declareParameters("com.google.appengine.api.users.User u");
       q.setOrdering("createDate");
+//      q.setRange(0,10);
       List<Stock> stocks = (List<Stock>) q.execute(getUser());
       for (Stock stock : stocks) {
         symbols.add(stock.getSymbol());
