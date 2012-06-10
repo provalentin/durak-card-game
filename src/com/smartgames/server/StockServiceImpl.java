@@ -71,25 +71,24 @@ private static final Logger LOG = Logger.getLogger(StockServiceImpl.class.getNam
     }
   }
 
-  public String[] getStocks() throws NotLoggedInException {
+  public String getStocks() throws NotLoggedInException {
     //checkLoggedIn();
     PersistenceManager pm = getPersistenceManager();
     List<String> symbols = new ArrayList<String>();
     LOG.log(Level.INFO, "starting getting stock records");
-    
-//    Entity e = (Entity) keycache.get("12345678");;
-//    if (e != null) {
-//    	String[] result = new String[1];
-//    	result[0] = e.toString();
-//      return result;
-//    }
+    List<Stock> stocks;
+    String e = (String) keycache.get("12345678");
+    if (e != null) {
+    	LOG.log(Level.WARNING,"game state string from memcache : " + e);
+    	return e;
+    }
     
     try {
       Query q = pm.newQuery(Stock.class, "user == u");
       q.declareParameters("com.google.appengine.api.users.User u");
       q.setOrdering("createDate");
 //      q.setRange(0,10);
-      List<Stock> stocks = (List<Stock>) q.execute(getUser());
+      stocks = (List<Stock>) q.execute(getUser());
       for (Stock stock : stocks) {
         symbols.add(stock.getSymbol());
       }
@@ -97,7 +96,8 @@ private static final Logger LOG = Logger.getLogger(StockServiceImpl.class.getNam
       pm.close();
     }
     //getStockHistory((String[]) symbols.toArray(new String[0]));
-    return (String[]) symbols.toArray(new String[0]);
+    //return (String[]) symbols.toArray(new String[0]);
+    return stocks.get(stocks.size()-1).getSymbol();
   }
   
 //  public StockHistory[] getStockHistory(String[] stocks) throws NotLoggedInException {
