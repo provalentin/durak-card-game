@@ -58,11 +58,9 @@ public class Durak_game implements EntryPoint {
 
   public void onModuleLoad() {
 	prepareGame();  
-	  
-    
   }
 
-private void moveTableCardsToTrash() {
+  private void moveTableCardsToTrash() {
 	// TODO Auto-generated method stub
 	for(int i=0;i<tableCards.size();i++){
 		tableCards.get(i).setState(State.played);
@@ -70,9 +68,9 @@ private void moveTableCardsToTrash() {
 	}
 	trashCards.addAll(tableCards);
 	tableCards.clear();
-}
+  }
 
-private void prepareGame() {
+  private void prepareGame() {
 	//absolutePanel = new AbsolutePanel();
 	RootPanel rootPanel = RootPanel.get("rootItem");
 	rootPanel.setSize("805", "660");
@@ -112,7 +110,34 @@ private void prepareGame() {
   	mainKind = cardPack.get(0).getKind();
   	moveCard(cardPack.get(0).getImage(), 0,250);
   	cardPack.get(0).getImage().setUrl(cardPack.get(0).getSrcImage());
-}
+  }
+
+  private void repaintTable(){
+	//repaint card pack here
+	repaintCardPack();  
+	repaintPlayerCards(0);
+	repaintPlayerCards(1);
+	repaintTableCards();
+  }
+  
+  private void repaintTableCards(){
+	  
+  }
+  
+  private void repaintCardPack(){
+	  for(int i=0;i<cardPack.size();i++){
+		  cardPack.get(i).getImage().removeFromParent();
+	  }
+	  for (int i=0; i<cardPack.size();i++){
+	  		//Window.alert(cardPack.get(i).getSrcImage());
+	  		absolutePanel.add(cardPack.get(i).getImage(), 0 + i*5 , 120  + i*5);
+	  } 
+	  if (cardPack.size()>0){
+		  mainKind = cardPack.get(0).getKind();
+	  	  moveCard(cardPack.get(0).getImage(), 0,250);
+		  cardPack.get(0).getImage().setUrl(cardPack.get(0).getSrcImage());
+	  }
+  }
 
   private void serveSecondPlayer() {
 	// TODO Auto-generated method stub
@@ -172,6 +197,7 @@ private void prepareGame() {
 	}
 	  
   };
+  
 
   private ClickHandler loginButtonClickHandler = new ClickHandler(){
 	  @Override
@@ -202,6 +228,7 @@ private void prepareGame() {
 	    });
 		}
   };
+
   
   private ClickHandler showAllCardsStateClickHandler = new ClickHandler(){
 	  @Override
@@ -210,6 +237,8 @@ private void prepareGame() {
 		  	Window.alert(allCardsStateToString());
 	  }
   };
+  
+  
   
   private ClickHandler loadGameStateButtonClickHandler = new ClickHandler(){
 	  @Override
@@ -223,13 +252,33 @@ private void prepareGame() {
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
 				Window.alert(result);
-//				stringToAllCardsState(result);
+				stringToAllCardsState(result);
+				Window.alert("refilling card arrays");
+				refillCardArrays();
+				Window.alert("repainting table");
+				repaintTable();
+				Window.alert("finished loading game state");
 			}
-		    });
+	    });
 		  	
 //		  	Window.alert("restoring game state");
 	  }
   };
+  
+  private void refillCardArrays(){
+	  cardPack.clear();
+	  tableCards.clear();
+	  players[0].clear();
+	  players[1].clear();
+	  for(int i=0;i<allCards.size();i++){
+		 switch(allCards.get(i).getState()){
+			 case 0:cardPack.add(allCards.get(i));break;
+			 case 1:tableCards.add(allCards.get(i));break;
+			 case 3:players[0].add(allCards.get(i));break;
+			 case 4:players[1].add(allCards.get(i));break;
+		 }
+	  }
+  }
   
   private void addStock(final String symbol) {
 	    stockService.addStock(symbol, new AsyncCallback<Void>() {
@@ -254,6 +303,9 @@ private void prepareGame() {
 	  for(int i=0;i<allCards.size();i++){
 	  		allCards.get(i).setState(Integer.parseInt(savedString.charAt(i)+""));
 	  	}
+	  
+	  
+	  Window.alert("new state is " + allCardsStateToString());
 	  return;
   };
   
@@ -318,6 +370,7 @@ private void prepareGame() {
 			
 		}
 	};
+	
   
 private void loadLogin() {
     // Assemble login panel.
