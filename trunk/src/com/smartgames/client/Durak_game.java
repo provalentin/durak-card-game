@@ -214,15 +214,16 @@ private void prepareGame() {
   private ClickHandler loadGameStateButtonClickHandler = new ClickHandler(){
 	  @Override
 		public void onClick(ClickEvent event) {
-		  stockService.getStocks(new AsyncCallback<String[]>() {
+		  stockService.getStocks(new AsyncCallback<String>() {
 	        public void onFailure(Throwable error) {
-	    	  Window.alert("addStock request failed");
+	    	  Window.alert("getStock request failed");
 	        }
 			  
 			@Override
-			public void onSuccess(String[] result) {
+			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
-				Window.alert(result[result.length-1]);
+				Window.alert(result);
+//				stringToAllCardsState(result);
 			}
 		    });
 		  	
