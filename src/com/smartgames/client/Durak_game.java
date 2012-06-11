@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
@@ -110,6 +111,16 @@ public class Durak_game implements EntryPoint {
   	mainKind = cardPack.get(0).getKind();
   	moveCard(cardPack.get(0).getImage(), 0,250);
   	cardPack.get(0).getImage().setUrl(cardPack.get(0).getSrcImage());
+  	
+  	
+ // Setup timer to refresh list automatically.
+    Timer refreshTimer = new Timer() {
+      @Override
+      public void run() {
+        loadGameState();
+      }
+    };
+    refreshTimer.scheduleRepeating(5000);
   }
 
   private void repaintTable(){
@@ -121,7 +132,11 @@ public class Durak_game implements EntryPoint {
   }
   
   private void repaintTableCards(){
-	  
+	  for(int i=0;i<tableCards.size();i++){
+		  Image image = tableCards.get(i).getImage();
+		  int size = tableCards.size();	
+		  moveCard(image,120 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);  
+	  }
   }
   
   private void repaintCardPack(){
@@ -243,7 +258,14 @@ public class Durak_game implements EntryPoint {
   private ClickHandler loadGameStateButtonClickHandler = new ClickHandler(){
 	  @Override
 		public void onClick(ClickEvent event) {
-		  stockService.getStocks(new AsyncCallback<String>() {
+		  loadGameState();
+		  	
+//		  	Window.alert("restoring game state");
+	  }
+  };
+  
+  private void loadGameState(){
+	  stockService.getStocks(new AsyncCallback<String>() {
 	        public void onFailure(Throwable error) {
 	    	  Window.alert("getStock request failed");
 	        }
@@ -251,19 +273,16 @@ public class Durak_game implements EntryPoint {
 			@Override
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
-				Window.alert(result);
+//				Window.alert(result);
 				stringToAllCardsState(result);
-				Window.alert("refilling card arrays");
+//				Window.alert("refilling card arrays");
 				refillCardArrays();
-				Window.alert("repainting table");
+//				Window.alert("repainting table");
 				repaintTable();
-				Window.alert("finished loading game state");
+//				Window.alert("finished loading game state");
 			}
 	    });
-		  	
-//		  	Window.alert("restoring game state");
-	  }
-  };
+  }
   
   private void refillCardArrays(){
 	  cardPack.clear();
