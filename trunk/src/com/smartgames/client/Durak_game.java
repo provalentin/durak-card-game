@@ -98,7 +98,7 @@ public class Durak_game implements EntryPoint {
     allCards.addAll(cardPack);
 //    Window.alert("all cards = " + allCards); 
      
-  	(new Randoms(new Random())).shuffle(cardPack);
+  	//(new Randoms(new Random())).shuffle(cardPack);
   	for (int i=0; i<cardPack.size();i++){
   		//Window.alert(cardPack.get(i).getSrcImage());
   		absolutePanel.add(cardPack.get(i).getImage(), 0 + i*5 , 120  + i*5);
@@ -114,13 +114,13 @@ public class Durak_game implements EntryPoint {
   	
   	
  // Setup timer to refresh list automatically.
-    Timer refreshTimer = new Timer() {
-      @Override
-      public void run() {
-        loadGameState();
-      }
-    };
-    refreshTimer.scheduleRepeating(5000);
+//    Timer refreshTimer = new Timer() {
+//      @Override
+//      public void run() {
+//        loadGameState();
+//      }
+//    };
+//    refreshTimer.scheduleRepeating(25000);
   }
 
   private void repaintTable(){
@@ -223,6 +223,7 @@ public class Durak_game implements EntryPoint {
 	    LoginServiceAsync loginService = GWT.create(LoginService.class);
 	    loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 	      public void onFailure(Throwable error) {
+	    	  Window.alert("login request failed");
 	      }
 
 	      public void onSuccess(LoginInfo result) {
@@ -313,18 +314,19 @@ public class Durak_game implements EntryPoint {
   private String allCardsStateToString(){
 	  String allCardsString = "";
 	  	for(int i=0;i<allCards.size();i++){
-	  		allCardsString += allCards.get(i).getState();
+	  		allCardsString += allCards.get(i).getId() +""+allCards.get(i).getState();
 	  	}
+	  	allCardsString += (currentPlayer+"");
 	  return allCardsString;
   };
   
   private void stringToAllCardsState(String savedString){
 	  for(int i=0;i<allCards.size();i++){
-	  		allCards.get(i).setState(Integer.parseInt(savedString.charAt(i)+""));
+	  		allCards.get(i).setState(Integer.parseInt(savedString.charAt(4*i+3)+""));
 	  	}
+	  currentPlayer = Integer.parseInt(savedString.charAt(allCards.size()*4)+"");
 	  
-	  
-	  Window.alert("new state is " + allCardsStateToString());
+	  //Window.alert("new state is " + allCardsStateToString());
 	  return;
   };
   
@@ -483,11 +485,12 @@ private void moveToNextPlayer() {
 		}
 	}
 	if(!isGameOver){
-		addStock(allCardsStateToString());
+		
 		currentPlayer = currentPlayer==0?1:0;
-		if(currentPlayer == 0) {
-			makeComputerNextMove();
-		}
+		addStock(allCardsStateToString());
+//		if(currentPlayer == 0) {
+//			makeComputerNextMove();
+//		}
 		repaintPlayerCards(1);
 		repaintPlayerCards(0);
 	}
