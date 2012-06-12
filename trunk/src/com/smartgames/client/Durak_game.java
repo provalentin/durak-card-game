@@ -55,6 +55,7 @@ public class Durak_game implements EntryPoint {
   private int currentPlayer = 1;
   private int mainKind;
   private boolean isGameOver;
+  private Timer refreshTimer;
   
   private final StockServiceAsync stockService = GWT.create(StockService.class);
 
@@ -127,14 +128,16 @@ public class Durak_game implements EntryPoint {
   	
   	
  // Setup timer to refresh list automatically.
-    Timer refreshTimer = new Timer() {
-      @Override
-      public void run() {
-//        loadGameState();
-    	  makeComputerNextMove();
-      }
-    };
-    refreshTimer.scheduleRepeating(2000);
+  	if(refreshTimer == null){
+	     refreshTimer = new Timer() {
+	      @Override
+	      public void run() {
+	//        loadGameState();
+	    	  makeComputerNextMove();
+	      }
+	    };
+	    refreshTimer.scheduleRepeating(2000);
+  	}
   }
 
   private void repaintTable(){
