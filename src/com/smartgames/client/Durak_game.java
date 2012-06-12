@@ -297,7 +297,8 @@ public class Durak_game implements EntryPoint {
   private ClickHandler newGameButtonClickHandler = new ClickHandler(){
 	  @Override
 		public void onClick(ClickEvent event) {
-		  createNewGame();
+//		  createNewGame();
+		  prepareGame();
 	  }
   };
   
@@ -545,6 +546,9 @@ private void moveToNextPlayer() {
 //		}
 		repaintPlayerCards(1);
 		repaintPlayerCards(0);
+	}else{
+		prepareGame();
+		isGameOver = false;
 	}
 	
 }
