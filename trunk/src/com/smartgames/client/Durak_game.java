@@ -181,23 +181,27 @@ public class Durak_game implements EntryPoint {
   }
   
   private void repaintPlayerCards(int playerNo){
-	  if(playerNo==1){
-		  for(int i=0;i<secondPlayerFocusPanels.size();i++){
-			  secondPlayerFocusPanels.get(i).removeFromParent();
-		  }
-	  }
+	  //adding focus panel for images for second player
+	  //it helps us arrows to navigate and play not only mouse
+	  //it works for tv where we don't have mouse and clicks
+	  
+//	  if(playerNo==1){
+//		  for(int i=0;i<secondPlayerFocusPanels.size();i++){
+//			  secondPlayerFocusPanels.get(i).removeFromParent();
+//		  }
+//	  }
 	  for(int i=0;i<players[playerNo].size();i++){
 		    int maxCardInRow = 6;
-		    if(playerNo==1){
-	               //players[playerNo].get(i).getImage().removeFromParent();
-	               FocusPanel focusPanel = new FocusPanel();
-	               focusPanel.setSize("75px", "105px");
-	               //focusPanel.add(players[playerNo].get(i).getImage());
-	               focusPanel.addKeyDownHandler(clickFocusHandler);
-	               focusPanel.addClickHandler(clickFocusPanelHandler);
-	               absolutePanel.add(focusPanel,20 + i%6*80,417+i/6*40 );
-	               secondPlayerFocusPanels.add(focusPanel);
-	        }   
+//		    if(playerNo==1){
+//	               //players[playerNo].get(i).getImage().removeFromParent();
+//	               FocusPanel focusPanel = new FocusPanel();
+//	               focusPanel.setSize("75px", "105px");
+//	               //focusPanel.add(players[playerNo].get(i).getImage());
+//	               focusPanel.addKeyDownHandler(clickFocusHandler);
+//	               focusPanel.addClickHandler(clickFocusPanelHandler);
+//	               absolutePanel.add(focusPanel,20 + i%6*80,417+i/6*40 );
+//	               secondPlayerFocusPanels.add(focusPanel);
+//	        }   
 			moveCard(players[playerNo].get(i).getImage(),20 + i%maxCardInRow*80, 
 					(playerNo==0)?10+i/maxCardInRow*40:417+i/maxCardInRow*40);
 	  }
