@@ -129,9 +129,18 @@ public class Durak_game implements EntryPoint {
 	repaintPlayerCards(0);
 	repaintPlayerCards(1);
 	repaintTableCards();
+	hideTrashCardsFromTable();
+  }
+  
+  private void hideTrashCardsFromTable(){
+	  //hiding trash cards from table
+	  for(int i=0;i<trashCards.size();i++){
+		  trashCards.get(i).getImage().removeFromParent();
+	  }
   }
   
   private void repaintTableCards(){
+	  //repainting table cards
 	  for(int i=0;i<tableCards.size();i++){
 		  Image image = tableCards.get(i).getImage();
 		  int size = tableCards.size();	
