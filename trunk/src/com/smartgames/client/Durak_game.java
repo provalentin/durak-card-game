@@ -173,7 +173,7 @@ public class Durak_game implements EntryPoint {
 		  		players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
 		  		players[playerNo].get(i).getImage().addClickHandler(clickHandler);
 		  		//if(playerNo==1) {
-		  			players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
+		  			//players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
 		  		//}
 		  	} 	
 		}
@@ -202,6 +202,7 @@ public class Durak_game implements EntryPoint {
 //	               absolutePanel.add(focusPanel,20 + i%6*80,417+i/6*40 );
 //	               secondPlayerFocusPanels.add(focusPanel);
 //	        }   
+		    players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
 			moveCard(players[playerNo].get(i).getImage(),20 + i%maxCardInRow*80, 
 					(playerNo==0)?10+i/maxCardInRow*40:417+i/maxCardInRow*40);
 	  }
