@@ -35,6 +35,7 @@ public class Durak_game implements EntryPoint {
   private Button loginButton = new Button("log in");
   private Button saveGameStateButton = new Button("save game state");
   private Button loadGameStateButton = new Button("load game state");
+  private Button newGameButton = new Button("new game");
   private ArrayList<Card> allCards = new ArrayList<Card>();
   private ArrayList<Card> tableCards = new ArrayList<Card>();
   private ArrayList<Card> cardPack = new ArrayList<Card>();
@@ -78,9 +79,11 @@ public class Durak_game implements EntryPoint {
 	rootPanel.add(loginButton,800,10);
 	rootPanel.add(saveGameStateButton, 800, 150);
 	rootPanel.add(loadGameStateButton, 800, 200);
+	rootPanel.add(newGameButton, 800, 250);
 	loginButton.addClickHandler(loginButtonClickHandler);
 	saveGameStateButton.addClickHandler(showAllCardsStateClickHandler);
 	loadGameStateButton.addClickHandler(loadGameStateButtonClickHandler);
+	newGameButton.addClickHandler(newGameButtonClickHandler);
 	rootPanel.add(absolutePanel, 10, 10);
   	absolutePanel.setSize("800px", "650px");
   	
@@ -98,6 +101,7 @@ public class Durak_game implements EntryPoint {
     allCards.addAll(cardPack);
 //    Window.alert("all cards = " + allCards); 
      
+
   	//(new Randoms(new Random())).shuffle(cardPack);
   	for (int i=0; i<cardPack.size();i++){
   		//Window.alert(cardPack.get(i).getSrcImage());
@@ -161,6 +165,15 @@ public class Durak_game implements EntryPoint {
 		  mainKind = cardPack.get(0).getKind();
 	  	  moveCard(cardPack.get(0).getImage(), 0,250);
 		  cardPack.get(0).getImage().setUrl(cardPack.get(0).getSrcImage());
+	  }
+	  
+	  for(int playerNo=0;playerNo<2;playerNo++){
+		  for(int i=0;i<players[playerNo].size();i++){
+		  		players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
+		  		players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
+		  		players[playerNo].get(i).getImage().addClickHandler(clickHandler);
+	  			players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
+		  }
 	  }
   }
 
@@ -228,6 +241,7 @@ public class Durak_game implements EntryPoint {
 	  
   };
   
+  
 
   private ClickHandler loginButtonClickHandler = new ClickHandler(){
 	  @Override
@@ -279,6 +293,29 @@ public class Durak_game implements EntryPoint {
 //		  	Window.alert("restoring game state");
 	  }
   };
+  
+  private ClickHandler newGameButtonClickHandler = new ClickHandler(){
+	  @Override
+		public void onClick(ClickEvent event) {
+		  createNewGame();
+	  }
+  };
+  
+  private void createNewGame(){
+	  (new Randoms(new Random())).shuffle(cardPack);
+	  	for (int i=0; i<cardPack.size();i++){
+	  		//Window.alert(cardPack.get(i).getSrcImage());
+	  		absolutePanel.add(cardPack.get(i).getImage(), 0 + i*5 , 120  + i*5);
+	  	}
+//	  	allCards.addAll(cardPack);
+	  	
+	  	
+	  	servefirstPlayer();
+	  	serveSecondPlayer();
+	  	mainKind = cardPack.get(0).getKind();
+	  	moveCard(cardPack.get(0).getImage(), 0,250);
+	  	cardPack.get(0).getImage().setUrl(cardPack.get(0).getSrcImage()); 
+  }
   
   private void loadGameState(){
 	  stockService.getStocks(new AsyncCallback<String>() {
@@ -342,8 +379,6 @@ public class Durak_game implements EntryPoint {
 	  		allCards.get(i).setState(Integer.parseInt(savedString.charAt(4*i+3)+""));
 	  	}
 	  currentPlayer = Integer.parseInt(savedString.charAt(allCards.size()*4)+"");
-	  
-	  //Window.alert("new state is " + allCardsStateToString());
 	  return;
   };
   
