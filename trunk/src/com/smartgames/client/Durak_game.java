@@ -91,6 +91,11 @@ public class Durak_game implements EntryPoint {
   	firstPlayerNextMoveButton.setText("Next move");
   	firstPlayerNextMoveButton.addClickHandler(nextMoveClickHandler);
   	
+  	cardPack.clear();
+  	allCards.clear();
+  	refillCardArrays();
+  	repaintTable();
+  	
   	for (int i=0; i<36;i++){
   		int id   = (i/9 + 1) * 100 + i%9 + 6;
   		String src = "images/" + id + ".png";
@@ -98,7 +103,11 @@ public class Durak_game implements EntryPoint {
   		//Window.alert(""+i);
   	}
      
+  	
     allCards.addAll(cardPack);
+    refillCardArrays();
+    repaintTable();
+    
 //    Window.alert("all cards = " + allCards); 
      
 
@@ -525,15 +534,15 @@ private void moveToNextPlayer() {
 	//Window.alert("#moveToNextPlayer-current player" + currentPlayer);
 	if(cardPack.size()==0) {
 		if(firstPlayerCards.size()==0 && secondPlayerCards.size()==0){
-			Window.alert("Equal");
+//			Window.alert("Equal");
 			isGameOver = true;
 		}
 		if(firstPlayerCards.size()==0){
-			Window.alert("You lose :-(");
+//			Window.alert("You lose :-(");
 			isGameOver = true;
 		}
 		if(secondPlayerCards.size()==0){
-			Window.alert("You win :-)");
+//			Window.alert("You win :-)");
 			isGameOver = true;
 		}
 	}
