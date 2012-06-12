@@ -114,13 +114,13 @@ public class Durak_game implements EntryPoint {
   	
   	
  // Setup timer to refresh list automatically.
-//    Timer refreshTimer = new Timer() {
-//      @Override
-//      public void run() {
-//        loadGameState();
-//      }
-//    };
-//    refreshTimer.scheduleRepeating(25000);
+    Timer refreshTimer = new Timer() {
+      @Override
+      public void run() {
+        loadGameState();
+      }
+    };
+    refreshTimer.scheduleRepeating(2000);
   }
 
   private void repaintTable(){
@@ -304,10 +304,12 @@ public class Durak_game implements EntryPoint {
 	  tableCards.clear();
 	  players[0].clear();
 	  players[1].clear();
+	  trashCards.clear();
 	  for(int i=0;i<allCards.size();i++){
 		 switch(allCards.get(i).getState()){
 			 case 0:cardPack.add(allCards.get(i));break;
 			 case 1:tableCards.add(allCards.get(i));break;
+			 case 2:trashCards.add(allCards.get(i));break;
 			 case 3:players[0].add(allCards.get(i));break;
 			 case 4:players[1].add(allCards.get(i));break;
 		 }
