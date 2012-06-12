@@ -117,7 +117,8 @@ public class Durak_game implements EntryPoint {
     Timer refreshTimer = new Timer() {
       @Override
       public void run() {
-        loadGameState();
+//        loadGameState();
+    	  makeComputerNextMove();
       }
     };
     refreshTimer.scheduleRepeating(2000);
@@ -143,7 +144,7 @@ public class Durak_game implements EntryPoint {
 	  //repainting table cards
 	  for(int i=0;i<tableCards.size();i++){
 		  Image image = tableCards.get(i).getImage();
-		  int size = tableCards.size();	
+		  int size = i+1;	
 		  moveCard(image,120 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);  
 	  }
   }
@@ -152,9 +153,9 @@ public class Durak_game implements EntryPoint {
 	  for(int i=0;i<cardPack.size();i++){
 		  cardPack.get(i).getImage().removeFromParent();
 	  }
-	  for (int i=0; i<cardPack.size();i++){
+	  for (int i=0; i<allCards.size();i++){
 	  		//Window.alert(cardPack.get(i).getSrcImage());
-	  		absolutePanel.add(cardPack.get(i).getImage(), 0 + i*5 , 120  + i*5);
+	  		absolutePanel.add(allCards.get(i).getImage(), 0 + i*5 , 120  + i*5);
 	  } 
 	  if (cardPack.size()>0){
 		  mainKind = cardPack.get(0).getKind();
@@ -516,10 +517,10 @@ private void moveToNextPlayer() {
 private void makeComputerNextMove() {
 	// TODO Auto-generated method stub
 	Random random = new Random();
-	for(int i=0;i<players[0].size()*2 ;i++){
-		int number = random.nextInt(players[0].size());
+	for(int i=0;i<players[currentPlayer].size()*2 ;i++){
+		int number = random.nextInt(players[currentPlayer].size());
 		//Window.alert("#"+number);
-		if(playThisCard(players[0].get(number).getImage())) return;
+		if(playThisCard(players[currentPlayer].get(number).getImage())) return;
 	}
 	handleNextMove();
 	
