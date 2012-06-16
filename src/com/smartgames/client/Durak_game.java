@@ -43,6 +43,7 @@ public class Durak_game implements EntryPoint {
   private ArrayList<Card> firstPlayerCards = new ArrayList<Card>();
   private ArrayList<Card> secondPlayerCards = new ArrayList<Card>();
   private ArrayList<FocusPanel> secondPlayerFocusPanels = new ArrayList<FocusPanel>();
+  private int defaultPlayerNo = 1;
   private ArrayList<Card>[] players =  (ArrayList<Card>[])new ArrayList[]{firstPlayerCards,secondPlayerCards};
   /**
    * Entry point method.
@@ -132,11 +133,11 @@ public class Durak_game implements EntryPoint {
 	     refreshTimer = new Timer() {
 	      @Override
 	      public void run() {
-	//        loadGameState();
-	    	  makeComputerNextMove();
+	        loadGameState();
+//	    	  makeComputerNextMove();
 	      }
 	    };
-	    refreshTimer.scheduleRepeating(2000);
+	    refreshTimer.scheduleRepeating(1000);
   	}
   }
 
@@ -339,13 +340,17 @@ public class Durak_game implements EntryPoint {
 			@Override
 			public void onSuccess(String result) {
 				// TODO Auto-generated method stub
-//				Window.alert(result);
-				stringToAllCardsState(result);
-//				Window.alert("refilling card arrays");
-				refillCardArrays();
-//				Window.alert("repainting table");
-				repaintTable();
-//				Window.alert("finished loading game state");
+				
+				//update UI only if state changed
+				if(!result.equals(allCardsStateToString())){
+	//				Window.alert(result);
+					stringToAllCardsState(result);
+	//				Window.alert("refilling card arrays");
+					refillCardArrays();
+	//				Window.alert("repainting table");
+					repaintTable();
+	//				Window.alert("finished loading game state");
+				}
 			}
 	    });
   }
@@ -452,7 +457,9 @@ public class Durak_game implements EntryPoint {
 		@Override
 		public void onClick(ClickEvent event) {
 			// TODO Auto-generated method stub
-			playThisCard((Image)event.getSource());
+			if(currentPlayer == defaultPlayerNo){
+				playThisCard((Image)event.getSource());
+			}
 			
 		}
 	};
