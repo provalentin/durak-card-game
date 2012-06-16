@@ -10,6 +10,7 @@ public class Card {
 	private Image image;
 	private Image backGroundImage;
 	private int state;
+	public boolean isChanged = true;
 	public Card(int id, int kind, String srcImage, Image image, int state) {
 		super();
 		this.id = id;

@@ -43,7 +43,7 @@ public class Durak_game implements EntryPoint {
   private ArrayList<Card> firstPlayerCards = new ArrayList<Card>();
   private ArrayList<Card> secondPlayerCards = new ArrayList<Card>();
   private ArrayList<FocusPanel> secondPlayerFocusPanels = new ArrayList<FocusPanel>();
-  private int defaultPlayerNo = 1;
+  private int defaultPlayerNo = 0;
   private ArrayList<Card>[] players =  (ArrayList<Card>[])new ArrayList[]{firstPlayerCards,secondPlayerCards};
   /**
    * Entry point method.
@@ -143,7 +143,7 @@ public class Durak_game implements EntryPoint {
 
   private void repaintTable(){
 	//repaint card pack here
-	repaintCardPack();  
+//	repaintCardPack();  
 	repaintPlayerCards(0);
 	repaintPlayerCards(1);
 	repaintTableCards();
@@ -162,7 +162,9 @@ public class Durak_game implements EntryPoint {
 	  for(int i=0;i<tableCards.size();i++){
 		  Image image = tableCards.get(i).getImage();
 		  int size = i+1;	
-		  moveCard(image,120 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);  
+		  if(tableCards.get(i).isChanged) {
+			  moveCard(image,120 - size* size%2 * 10 + (size + 1) /2 * 90, 200 - size%2*10);  
+		  }
 	  }
   }
   
@@ -393,8 +395,12 @@ public class Durak_game implements EntryPoint {
   };
   
   private void stringToAllCardsState(String savedString){
+	  String currentState = allCardsStateToString();
 	  for(int i=0;i<allCards.size();i++){
-	  		allCards.get(i).setState(Integer.parseInt(savedString.charAt(4*i+3)+""));
+		  	int newCardState = Integer.parseInt(savedString.charAt(4*i+3)+"");
+		  	int oldCardState = Integer.parseInt(currentState.charAt(4*i+3)+"");
+	  		allCards.get(i).setState(newCardState);
+	  		allCards.get(i).isChanged = (newCardState!=oldCardState);
 	  	}
 	  currentPlayer = Integer.parseInt(savedString.charAt(allCards.size()*4)+"");
 	  return;
