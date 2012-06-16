@@ -43,7 +43,7 @@ public class Durak_game implements EntryPoint {
   private ArrayList<Card> firstPlayerCards = new ArrayList<Card>();
   private ArrayList<Card> secondPlayerCards = new ArrayList<Card>();
   private ArrayList<FocusPanel> secondPlayerFocusPanels = new ArrayList<FocusPanel>();
-  private int defaultPlayerNo = 0;
+  private int defaultPlayerNo = 1;
   private ArrayList<Card>[] players =  (ArrayList<Card>[])new ArrayList[]{firstPlayerCards,secondPlayerCards};
   /**
    * Entry point method.
@@ -240,6 +240,9 @@ public class Durak_game implements EntryPoint {
 //	               absolutePanel.add(focusPanel,20 + i%6*80,417+i/6*40 );
 //	               secondPlayerFocusPanels.add(focusPanel);
 //	        }   
+		    players[playerNo].get(i).getImage().addMouseOverHandler(mouseOverHandler);
+	  		players[playerNo].get(i).getImage().addMouseOutHandler(mouseOutHandler);
+	  		players[playerNo].get(i).getImage().addClickHandler(clickHandler);
 		    players[playerNo].get(i).getImage().setUrl(players[playerNo].get(i).getSrcImage());
 			moveCard(players[playerNo].get(i).getImage(),20 + i%maxCardInRow*80, 
 					(playerNo==0)?10+i/maxCardInRow*40:417+i/maxCardInRow*40);
